@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/services.dart';
-
-import 'user/login.dart';
+import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
+import 'package:winwin_hexo_editor_mobile/common/routing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoadingPage extends StatefulWidget {
   LoadingPage({Key key, this.title}) : super(key: key);
@@ -16,17 +17,26 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage>
     with AfterLayoutMixin<LoadingPage> {
   @override
-  void afterFirstLayout(BuildContext context) {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) {
-      return WillPopScope(
-        child: LoginPage(),
-        onWillPop: () async {
-          print('background by back button');
-          return await AndroidBackTop.backDeskTop();
-        },
-      );
-    }));
+  void afterFirstLayout(BuildContext context) async {
+    var prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString(AppConstant.appAdminUserToken);
+    if (token == '') {
+      Navigator.popAndPushNamed(context, Routing.loginPage);
+    } else {
+      Navigator.popAndPushNamed(context, Routing.homePage);
+    }
+    
+
+    // Navigator.pushReplacement(context,
+    //     MaterialPageRoute(builder: (BuildContext context) {
+    //   return WillPopScope(
+    //     child: LoginPage(),
+    //     onWillPop: () async {
+    //       print('background by back button');
+    //       return await AndroidBackTop.backDeskTop();
+    //     },
+    //   );
+    // }));
   }
 
   @override

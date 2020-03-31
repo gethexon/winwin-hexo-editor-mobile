@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dio/adapter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 
 enum AuthRequestType {
   authRequestTypeGet,
@@ -9,19 +12,74 @@ enum AuthRequestType {
 }
 
 class BaseApi {
+  var prefs;
 
-  static const String _AT = "Authorization";
+  factory BaseApi() => _sharedInstance();
 
-  getRequest(String url, Map<String, dynamic> parameters) async {
+  static BaseApi _instance;
+  static Dio dio;
+
+  BaseApi._();
+  // BaseApi._(){}
+
+  static BaseApi _sharedInstance() {
+    if (_instance == null) {
+      _instance = BaseApi._();
+      dio = Dio();
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        client.badCertificateCallback =
+            (X509Certificate cert, String host, int port) {
+          return true;
+        };
+      };
+    }
+    return _instance;
+  }
+
+  final String authTag = "Authorization";
+
+  Future<dynamic> getRequestWithAuth(
+      String url, Map<String, dynamic> parameters) async {
+    if (prefs == null) {
+      prefs = await SharedPreferences.getInstance();
+    }
+    var server = prefs.getString(AppConstant.appAdminServerAddrss);
+    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var returnValue;
     try {
       var options = Options(
-        headers: {_AT: ""},
+        headers: {authTag: "Bearer $token"},
       );
-      Response response = await Dio().get(url,
-          queryParameters: parameters, options: options);
-      return response.data;
-    } catch (e) {
-      print(e);
+      Response response = await dio
+          .get(server + url, queryParameters: parameters, options: options);
+      returnValue = response.data;
+    } on DioError catch (onError) {
+      returnValue = onError.response.data;
     }
+    return returnValue;
+  }
+
+  Future<dynamic> login(String username, String password) async {
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode('$username:$password'));
+    print(basicAuth);
+
+    var options = new Options(
+      headers: {authTag: basicAuth},
+    );
+
+    if (prefs == null) {
+      prefs = await SharedPreferences.getInstance();
+    }
+    var server = prefs.getString(AppConstant.appAdminServerAddrss);
+    var returnValue;
+    try {
+      Response response = await dio.get('$server/token', options: options);
+      returnValue = response.data;
+    } on DioError catch (onError) {
+      returnValue = onError.response.data;
+    }
+    return returnValue;
   }
 }

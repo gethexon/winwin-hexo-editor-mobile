@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:fluintl/fluintl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'pages/loading.dart';
+import 'common/routing.dart';
+import 'i18n/i18n.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setLocalizedValues(localizedValues);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      onGenerateTitle: (context) => IntlUtil.getString(context, Ids.appTitle),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoadingPage(title: 'Flutter Demo Home Page'),
+      initialRoute: Routing.loadingPage,
+      routes: Routing.routes,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        CustomLocalizations.delegate
+      ],
+      supportedLocales: CustomLocalizations.supportedLocales,
     );
   }
 }
