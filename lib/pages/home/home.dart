@@ -31,22 +31,39 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   void afterFirstLayout(BuildContext context) async {}
 
   _itemBuilder(List dataList, BuildContext context, int index) {
-    // WorksheetTeam team = dataList[index];
-    return Card(
-        child: InkWell(
+    PostItem item = dataList[index];
+    return ListTile(
+      isThreeLine: true,
+      leading: item.published
+          ? Icon(
+              Icons.assignment_turned_in,
+              color: Colors.green,
+            )
+          : Icon(
+              Icons.assignment_late,
+              color: Colors.red,
+            ),
+      title: new Text(item.title),
+      subtitle: Text(item.sContent),
+      trailing: new Icon(Icons.keyboard_arrow_right),
       onTap: () {
-        // _onItemTab(team);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return new AlertDialog(
+              title: new Text(
+                'ListViewDemo',
+                style: new TextStyle(
+                  color: Colors.black54,
+                  fontSize: 18.0,
+                ),
+              ),
+              content: new Text('您选择的item内容为:,item 状态为 1'),
+            );
+          },
+        );
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(14, 14, 6, 2),
-            child: Text('團號：'),
-          ),
-        ],
-      ),
-    ));
+    );
   }
 
   Future<void> _initRequester() async {
@@ -60,9 +77,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
           print(postItem);
           _postLists.add(postItem);
         }
-        setState(() {
-          
-        });
+        setState(() {});
       } else {
         Toast.show(responseValue['message'], context,
             duration: Toast.LENGTH_LONG);
@@ -82,11 +97,45 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(IntlUtil.getString(context, Ids.appTitle)),
+      ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add), onPressed: () {
-          exit();
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, Routing.newPostPage);
         },
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+                title: Text('lifecycle 学习'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/LifecyclePage');
+                }),
+            ListTile(
+                title: Text('Route 学习'),
+                onTap: () {
+                  Navigator.of(context).pop(); /*隐藏drawer*/
+                  Navigator.pushNamed(context, '/RoutePage');
+                }),
+            ListTile(
+                title: Text('数据存储 学习'),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, '/DataPage');
+                }),
+            ListTile(
+                title: Text(
+                  IntlUtil.getString(context, Ids.drawExit),
+                ),
+                onTap: () {
+                  exit();
+                }),
+          ],
+        ),
       ),
       body: WaveBackground(
         child: SafeArea(

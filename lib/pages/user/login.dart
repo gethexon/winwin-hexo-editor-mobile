@@ -71,56 +71,70 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      resizeToAvoidBottomPadding: false,
       body: WaveBackground(
         child: SafeArea(
-          child: Column(
-            children: [
-              TextField(
-                controller: serverEditingController,
-                obscureText: false,
-                textInputAction: TextInputAction.next,
-                style: TextStyle(
-                  fontSize: 16,
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      IntlUtil.getString(context, Ids.loginPageWelcomBack),
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  ),
                 ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText:
-                      IntlUtil.getString(context, Ids.loginPageServerHint),
+                TextField(
+                  controller: serverEditingController,
+                  obscureText: false,
+                  textInputAction: TextInputAction.next,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText:
+                        IntlUtil.getString(context, Ids.loginPageServerHint),
+                  ),
                 ),
-              ),
-              TextField(
-                controller: nameEditingController,
-                obscureText: false,
-                textInputAction: TextInputAction.next,
-                style: TextStyle(
-                  fontSize: 16,
+                TextField(
+                  controller: nameEditingController,
+                  obscureText: false,
+                  textInputAction: TextInputAction.next,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText:
+                        IntlUtil.getString(context, Ids.loginPageUserHint),
+                  ),
                 ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: IntlUtil.getString(context, Ids.loginPageUserHint),
+                TextField(
+                  controller: passwordEditingController,
+                  obscureText: true,
+                  textInputAction: TextInputAction.done,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText:
+                        IntlUtil.getString(context, Ids.loginPagePasswordHint),
+                  ),
                 ),
-              ),
-              TextField(
-                controller: passwordEditingController,
-                obscureText: true,
-                textInputAction: TextInputAction.done,
-                style: TextStyle(
-                  fontSize: 16,
+                FlatButton(
+                  child: Text(
+                    IntlUtil.getString(context, Ids.loginPageLoginButton),
+                  ),
+                  onPressed: onLoginButtonClick,
                 ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText:
-                      IntlUtil.getString(context, Ids.loginPagePasswordHint),
-                ),
-              ),
-              FlatButton(
-                child: Text(
-                  IntlUtil.getString(context, Ids.loginPageLoginButton),
-                ),
-                onPressed: onLoginButtonClick,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
