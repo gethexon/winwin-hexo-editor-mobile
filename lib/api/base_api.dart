@@ -81,10 +81,30 @@ class BaseApi {
     return returnValue;
   }
 
+  Future<dynamic> deleteRequestWithAuth(
+      String url, Map<String, dynamic> parameters) async {
+    if (prefs == null) {
+      prefs = await SharedPreferences.getInstance();
+    }
+    var server = prefs.getString(AppConstant.appAdminServerAddrss);
+    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var returnValue;
+    try {
+      var options = Options(
+        headers: {authTag: "Bearer $token"},
+      );
+      Response response = await dio
+          .delete(server + url, data: parameters, options: options);
+      returnValue = response.data;
+    } on DioError catch (onError) {
+      returnValue = onError.response.data;
+    }
+    return returnValue;
+  }
+
   Future<dynamic> login(String username, String password) async {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode('$username:$password'));
-    print(basicAuth);
 
     var options = new Options(
       headers: {authTag: basicAuth},

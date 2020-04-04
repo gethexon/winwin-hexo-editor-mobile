@@ -27,6 +27,8 @@ dev_dependencies:
   flutter_easyrefresh: ^2.1.0
   zefyr: ^0.10.0
   quill_delta: ^1.0.1
+  flutter_markdown: ^0.3.4
+  url_launcher: ^5.4.2
 
 flutter:
   uses-material-design: true

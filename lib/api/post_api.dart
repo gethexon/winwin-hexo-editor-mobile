@@ -6,8 +6,18 @@ class PostApi {
     return await BaseApi().getRequestWithAuth(AppApiAddress.posts, null);
   }
 
-  static Future<dynamic> savePost(String id, Map<String, dynamic> parameters) async {
+  static Future<dynamic> getPost(String id) async {
+    String url = AppApiAddress.post.replaceAll('{id}', id);
+    return await BaseApi().getRequestWithAuth(url, null);
+  }
+
+  static Future<dynamic> savePost(Map<String, dynamic> parameters) async {
     String url = AppApiAddress.post.replaceAll('/{id}', '');
     return await BaseApi().postRequestWithAuth(url, parameters);
+  }
+
+  static Future<dynamic> deletePost(String id) async {
+    String url = AppApiAddress.post.replaceAll('{id}', id);
+    return await BaseApi().deleteRequestWithAuth(url, null);
   }
 }

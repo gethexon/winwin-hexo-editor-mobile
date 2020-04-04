@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: Routing.loadingPage,
+      onGenerateRoute: Routing.generateRoute,
       routes: Routing.routes,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

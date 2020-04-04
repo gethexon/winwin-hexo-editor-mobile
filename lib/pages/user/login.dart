@@ -9,6 +9,7 @@ import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -37,6 +38,15 @@ class _LoginPageState extends State<LoginPage>
         prefs.getString(AppConstant.appAdminServerAddrss);
     nameEditingController.text =
         prefs.getString(AppConstant.appAdminServerUserName);
+  }
+
+  void onWinwinGithubButtonClick() async {
+    String url = 'https://github.com/YuJianghao/winwin-hexo-editor';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   void onLoginButtonClick() async {
@@ -83,7 +93,7 @@ class _LoginPageState extends State<LoginPage>
                       IntlUtil.getString(context, Ids.loginPageWelcomBack),
                       style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 30.0,
+                        fontSize: 36.0,
                       ),
                     ),
                   ),
@@ -132,6 +142,16 @@ class _LoginPageState extends State<LoginPage>
                     IntlUtil.getString(context, Ids.loginPageLoginButton),
                   ),
                   onPressed: onLoginButtonClick,
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                FlatButton(
+                  child: Text(
+                    IntlUtil.getString(context, Ids.loginPageGithubButton),
+                    style: TextStyle(color: Colors.green, fontSize: 12.0),
+                  ),
+                  onPressed: onWinwinGithubButtonClick,
                 ),
               ],
             ),

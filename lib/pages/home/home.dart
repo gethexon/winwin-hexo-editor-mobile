@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
@@ -21,10 +22,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   List<PostItem> _postLists = List();
   EasyRefreshController _refreshController = EasyRefreshController();
+  GlobalKey _scaffoldKey;
 
   @override
   void initState() {
     super.initState();
+    _scaffoldKey = GlobalKey();
   }
 
   @override
@@ -32,49 +35,106 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
 
   _itemBuilder(List dataList, BuildContext context, int index) {
     PostItem item = dataList[index];
-    return ListTile(
-      isThreeLine: true,
-      leading: item.published
-          ? Icon(
-              Icons.assignment_turned_in,
-              color: Colors.green,
-            )
-          : Icon(
-              Icons.assignment_late,
-              color: Colors.red,
-            ),
-      title: new Text(item.title),
-      subtitle: Text(item.sContent),
-      trailing: new Icon(Icons.keyboard_arrow_right),
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return new AlertDialog(
-              title: new Text(
-                'ListViewDemo',
-                style: new TextStyle(
-                  color: Colors.black54,
-                  fontSize: 18.0,
-                ),
-              ),
-              content: new Text('您选择的item内容为:,item 状态为 1'),
-            );
-          },
-        );
+    return Dismissible(
+      onDismissed: (direction) {
+        PostApi.deletePost(item.sId).then((value) {
+          print(value);
+        });
       },
+      confirmDismiss: (direction) async {
+        if (direction == DismissDirection.endToStart) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(
+                  IntlUtil.getString(context, Ids.homePageAlertDeleteText),
+                ),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: Text(
+                      IntlUtil.getString(context, Ids.no),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: Text(
+                      IntlUtil.getString(context, Ids.yes),
+                    ),
+                  )
+                ],
+              );
+            },
+          );
+        }
+        return false;
+      },
+      background: Container(),
+      secondaryBackground: Container(
+        color: Colors.red,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              IntlUtil.getString(context, Ids.delete),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.right,
+            ),
+            SizedBox(
+              width: 22.0,
+            ),
+          ],
+        ),
+      ),
+      child: ListTile(
+        isThreeLine: true,
+        leading: item.published
+            ? Icon(
+                Icons.assignment_turned_in,
+                color: Colors.green,
+              )
+            : Icon(
+                Icons.assignment_late,
+                color: Colors.red,
+              ),
+        title: new Text(item.title),
+        subtitle: Text(
+          item.sContent,
+          maxLines: 2,
+        ),
+        trailing: new Icon(Icons.keyboard_arrow_right),
+        onTap: () {
+          Navigator.pushNamed(context, Routing.postDetailPage + item.sId);
+        },
+      ),
+      key: UniqueKey(),
     );
   }
 
   Future<void> _initRequester() async {
     PostApi.getPosts().then((responseValue) {
-      var valueString = responseValue.toString();
-      print(valueString);
       if (responseValue['success'] == true) {
         _postLists.clear();
         for (var postItemValue in responseValue['data']['posts']) {
           PostItem postItem = PostItem.fromJson(postItemValue);
-          print(postItem);
           _postLists.add(postItem);
         }
         setState(() {});
@@ -94,9 +154,14 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     Navigator.popAndPushNamed(context, Routing.loadingPage);
   }
 
+  void publish() async {
+    BlogApi.deploy();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text(IntlUtil.getString(context, Ids.appTitle)),
       ),
@@ -110,30 +175,30 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         child: ListView(
           children: <Widget>[
             ListTile(
-                title: Text('lifecycle 学习'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/LifecyclePage');
-                }),
+              leading: Icon(
+                Icons.publish,
+                color: Colors.blue,
+              ),
+              title: Text(
+                IntlUtil.getString(context, Ids.drawPublish),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                publish();
+              },
+            ),
             ListTile(
-                title: Text('Route 学习'),
-                onTap: () {
-                  Navigator.of(context).pop(); /*隐藏drawer*/
-                  Navigator.pushNamed(context, '/RoutePage');
-                }),
-            ListTile(
-                title: Text('数据存储 学习'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, '/DataPage');
-                }),
-            ListTile(
-                title: Text(
-                  IntlUtil.getString(context, Ids.drawExit),
-                ),
-                onTap: () {
-                  exit();
-                }),
+              leading: Icon(
+                Icons.exit_to_app,
+                color: Colors.red,
+              ),
+              title: Text(
+                IntlUtil.getString(context, Ids.drawExit),
+              ),
+              onTap: () {
+                exit();
+              },
+            ),
           ],
         ),
       ),

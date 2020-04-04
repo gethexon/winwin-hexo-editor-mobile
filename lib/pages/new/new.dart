@@ -6,6 +6,7 @@ import 'package:zefyr/zefyr.dart';
 import 'package:quill_delta/quill_delta.dart';
 import 'package:fluintl/fluintl.dart';
 import 'package:notus/convert.dart';
+import 'package:toast/toast.dart';
 
 class NewPostPage extends StatefulWidget {
   @override
@@ -40,37 +41,98 @@ class _NewPostPageState extends State<NewPostPage>
 
   save() {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(IntlUtil.getString(context, Ids.newPostPageSaveDialogTitle)),
-            content: Text(IntlUtil.getString(context, Ids.newPostPageSaveDialogContext)),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(IntlUtil.getString(context, Ids.no)),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              FlatButton(
-                child: Text(IntlUtil.getString(context, Ids.yes)),
-                onPressed: () {
-                  Navigator.pop(context);
-                  PostApi.savePost('mobiletest01', {
-                    "title": _titleString,
-                    "_content":
-                        notusMarkdown.encode(_controller.document.toDelta()),
-                  }).then((responseValue) {
-                    print(responseValue);
-                  });
-                },
-              )
-            ],
-          );
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title:
+              Text(IntlUtil.getString(context, Ids.newPostPageSaveDialogTitle)),
+          content: Text(
+              IntlUtil.getString(context, Ids.newPostPageSaveDialogContext)),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(IntlUtil.getString(context, Ids.no)),
+              onPressed: () {
+                Navigator.pop(context, '');
+              },
+            ),
+            FlatButton(
+              child: Text(IntlUtil.getString(context, Ids.yes)),
+              onPressed: () {
+                PostApi.savePost({
+                  "title": _titleString,
+                  "_content":
+                      notusMarkdown.encode(_controller.document.toDelta()),
+                }).then((responseValue) {
+                  Navigator.pop(context, responseValue);
+                });
+              },
+            )
+          ],
+        );
+      },
+    ).then((responseValue) {
+      if (responseValue != '' && responseValue['success'] == true) {
+        Navigator.pop(context);
+      } else {
+        Toast.show(responseValue['message'], context,
+            duration: Toast.LENGTH_LONG);
+      }
+    });
   }
 
-  changeTitle() {}
+  changeTitle() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        String stringValue = '';
+        return AlertDialog(
+          content: new Row(
+            children: <Widget>[
+              new Expanded(
+                  child: new TextField(
+                autofocus: true,
+                decoration: new InputDecoration(
+                  hintText: IntlUtil.getString(
+                      context, Ids.newPostPageAlertPostTitle),
+                ),
+                onChanged: (value) {
+                  stringValue = value;
+                },
+              ))
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, '');
+              },
+              child: Text(
+                IntlUtil.getString(context, Ids.no),
+                style: TextStyle(
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context, stringValue);
+              },
+              child: Text(
+                IntlUtil.getString(context, Ids.yes),
+              ),
+            )
+          ],
+        );
+      },
+    ).then((value) {
+      if (value != '') {
+        setState(() {
+          _titleString = value;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +143,22 @@ class _NewPostPageState extends State<NewPostPage>
             _titleString,
           ),
           onTap: () {
-            print(_titleString);
+            changeTitle();
           },
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.tab),
-            onPressed: () {
-              save();
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.category),
-            onPressed: () {
-              save();
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.tab),
+          //   onPressed: () {
+          //     save();
+          //   },
+          // ),
+          // IconButton(
+          //   icon: Icon(Icons.category),
+          //   onPressed: () {
+          //     save();
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () {
