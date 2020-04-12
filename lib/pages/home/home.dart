@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     return Dismissible(
       onDismissed: (direction) {
         PostApi.deletePost(item.sId).then((value) {
-          print(value);
+          // print(value);
         });
       },
       confirmDismiss: (direction) async {

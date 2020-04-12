@@ -1,7 +1,7 @@
 name: winwin_hexo_editor_mobile
 description: A new Flutter project.
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -9,15 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^0.1.2
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_localizations:
     sdk: flutter
 
+  cupertino_icons: ^0.1.2
   after_layout: ^1.0.7+2
   dio: ^3.0.9
   shared_preferences: ^0.5.6+3
@@ -29,6 +24,27 @@ dev_dependencies:
   quill_delta: ^1.0.1
   flutter_markdown: ^0.3.4
   url_launcher: ^5.4.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.7.4
+  flutter_rename_app: ^1.0.0
+
+flutter_rename_app:
+  application_name: HW-Editor
+  dart_package_name: winwin_hexo_editor_mobile
+  application_id: com.maomishen.wheditor
+  bundle_id: com.maomishen.wheditor
+  android_package_name: com.maomishen.wheditor
+
+flutter_icons:
+  image_path: "assets/images/icon.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "assets/images/icon-bg.png"
+  adaptive_icon_foreground: "assets/images/icon-fg.png"
 
 flutter:
   uses-material-design: true

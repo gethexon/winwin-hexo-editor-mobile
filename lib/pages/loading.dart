@@ -20,7 +20,7 @@ class _LoadingPageState extends State<LoadingPage>
   void afterFirstLayout(BuildContext context) async {
     var prefs = await SharedPreferences.getInstance();
     var token = prefs.getString(AppConstant.appAdminUserToken);
-    if (token == '') {
+    if (token == null || token == '') {
       Navigator.popAndPushNamed(context, Routing.loginPage);
     } else {
       Navigator.popAndPushNamed(context, Routing.homePage);
