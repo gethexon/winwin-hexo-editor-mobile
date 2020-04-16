@@ -50,14 +50,32 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void onLoginButtonClick() async {
+    var server = serverEditingController.text.trim();
+    var name = nameEditingController.text.trim();
+    var password = passwordEditingController.text.trim();
+    if (server.isEmpty) {
+      Toast.show(
+          IntlUtil.getString(context, Ids.loginPageServerEmptyError), context,
+          duration: Toast.LENGTH_LONG);
+      return;
+    }
+    if (name.isEmpty) {
+      Toast.show(
+          IntlUtil.getString(context, Ids.loginPageUserEmptyError), context,
+          duration: Toast.LENGTH_LONG);
+      return;
+    }
+    if (password.isEmpty) {
+      Toast.show(
+          IntlUtil.getString(context, Ids.loginPagePasswordEmptyError), context,
+          duration: Toast.LENGTH_LONG);
+      return;
+    }
     var pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
     pr.style(message: IntlUtil.getString(context, Ids.loadingAlertText));
     pr.show();
-    var server = serverEditingController.text.trim();
     prefs.setString(AppConstant.appAdminServerAddrss, server);
-    var name = nameEditingController.text.trim();
     prefs.setString(AppConstant.appAdminServerUserName, name);
-    var password = passwordEditingController.text.trim();
     UserApi.login(name, password).then((responseValue) {
       pr.hide();
       if (responseValue['success'] == true) {

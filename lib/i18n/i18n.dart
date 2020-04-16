@@ -6,6 +6,9 @@ class Ids {
   static final String loginPageLoginButton = 'loginPageLoginButton';
   static final String loginPageGithubButton = 'loginPageGithubButton';
   static final String loginPageWelcomBack = 'loginPageWelcomBack';
+  static final String loginPageServerEmptyError = 'loginPageServerEmptyError';
+  static final String loginPageUserEmptyError = 'loginPageUserEmptyError';
+  static final String loginPagePasswordEmptyError = 'loginPagePasswordEmptyError';
   static final String loadingAlertText = 'loadingAlertText';
   static final String homePageListEmptyText = 'homePageListEmptyText';
   static final String homePageAlertDeleteText = 'homePageAlertDeleteText';
