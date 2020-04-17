@@ -6,6 +6,7 @@ import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
+import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
 import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   List<PostItem> _postLists = List();
   EasyRefreshController _refreshController = EasyRefreshController();
   GlobalKey _scaffoldKey;
+  HomeHelper _homeHelper = HomeHelper();
 
   @override
   void initState() {
@@ -43,41 +45,44 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
       },
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(
-                  IntlUtil.getString(context, Ids.homePageAlertDeleteText),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: Text(
-                      IntlUtil.getString(context, Ids.no),
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, true);
-                    },
-                    child: Text(
-                      IntlUtil.getString(context, Ids.yes),
-                    ),
-                  )
-                ],
-              );
-            },
-          );
+          return _homeHelper.getDeleteAlertDialog(context);
+        }
+        if (direction == DismissDirection.startToEnd) {
+          return _homeHelper.getPublishOrUnpublishAlertDialog(
+              context, item.published);
         }
         return false;
       },
-      background: Container(),
+      background: Container(
+        color: item.published ? Colors.orange : Colors.green,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 12.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                item.published
+                    ? Icons.assignment_returned
+                    : Icons.assignment_turned_in,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              item.published
+                  ? IntlUtil.getString(context, Ids.homePageUnPublish)
+                  : IntlUtil.getString(context, Ids.homePagePublish),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.right,
+            ),
+          ],
+        ),
+      ),
       secondaryBackground: Container(
         color: Colors.red,
         child: Row(
@@ -112,8 +117,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                 color: Colors.green,
               )
             : Icon(
-                Icons.assignment_late,
-                color: Colors.red,
+                Icons.assignment_returned,
+                color: Colors.orange,
               ),
         title: new Text(item.title),
         subtitle: Text(

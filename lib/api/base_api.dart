@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:dio/adapter.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:winwin_hexo_editor_mobile/api/token_interceptor.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
