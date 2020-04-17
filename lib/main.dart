@@ -5,6 +5,7 @@ import 'package:fluintl/fluintl.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
 
 import 'common/routing.dart';
 import 'i18n/i18n.dart';
@@ -61,9 +62,8 @@ class MyApp extends StatelessWidget {
       navigatorKey: AppConstant.navigatorKey,
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => IntlUtil.getString(context, Ids.appTitle),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.getThemeData(isDarkMode: false),
+      darkTheme: AppTheme.getThemeData(isDarkMode: true),
       initialRoute: Routing.loadingPage,
       onGenerateRoute: Routing.generateRoute,
       routes: Routing.routes,

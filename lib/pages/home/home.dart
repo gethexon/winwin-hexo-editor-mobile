@@ -8,6 +8,7 @@ import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
 import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
@@ -299,7 +300,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                     ListTile(
                       leading: Icon(
                         LineAwesomeIcons.github,
-                        color: Colors.black,
+                        color: AppTheme.darkMode ? Colors.white : Colors.black,
                       ),
                       title: Text(
                         IntlUtil.getString(context, Ids.drawGithub),
