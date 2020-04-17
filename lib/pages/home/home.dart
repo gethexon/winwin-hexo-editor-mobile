@@ -39,9 +39,22 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     PostItem item = dataList[index];
     return Dismissible(
       onDismissed: (direction) {
-        PostApi.deletePost(item.sId).then((value) {
-          // print(value);
-        });
+        if (direction == DismissDirection.endToStart) {
+          PostApi.deletePost(item.sId).then((value) {
+            _refreshController.callRefresh();
+          });
+        }
+        if (direction == DismissDirection.startToEnd) {
+          if (item.published) {
+            PostApi.unpublishPost(item.sId).then((value) {
+              _refreshController.callRefresh();
+            });
+          } else {
+            PostApi.publishPost(item.sId).then((value) {
+              _refreshController.callRefresh();
+            });
+          }
+        }
       },
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {

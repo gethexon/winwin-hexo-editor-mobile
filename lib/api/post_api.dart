@@ -20,4 +20,14 @@ class PostApi {
     String url = AppApiAddress.post.replaceAll('{id}', id);
     return await BaseApi().deleteRequestWithAuth(url, null);
   }
+
+  static Future<dynamic> publishPost(String id) async {
+    String url = AppApiAddress.postPublish.replaceAll('{id}', id);
+    return await BaseApi().postRequestWithAuth(url, null);
+  }
+
+  static Future<dynamic> unpublishPost(String id) async {
+    String url = AppApiAddress.postUnpublish.replaceAll('{id}', id);
+    return await BaseApi().postRequestWithAuth(url, null);
+  }
 }
