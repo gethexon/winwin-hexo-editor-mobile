@@ -60,6 +60,7 @@ class _NewPostPageState extends State<NewPostPage>
               onPressed: () {
                 PostApi.savePost({
                   "title": _titleString,
+                  "layout": "draft",
                   "_content":
                       notusMarkdown.encode(_controller.document.toDelta()),
                 }).then((responseValue) {

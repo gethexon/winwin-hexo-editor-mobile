@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
+import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
 import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
@@ -13,6 +18,8 @@ import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:toast/toast.dart';
 import 'package:fluintl/fluintl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info/package_info.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -23,6 +30,10 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   List<PostItem> _postLists = List();
   EasyRefreshController _refreshController = EasyRefreshController();
   GlobalKey _scaffoldKey;
+  HomeHelper _homeHelper = HomeHelper();
+  String _version = '';
+  String _name = '';
+  AppThemeMode _selectedThemeValue;
 
   @override
   void initState() {
@@ -31,53 +42,75 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   @override
-  void afterFirstLayout(BuildContext context) async {}
+  void afterFirstLayout(BuildContext context) async {
+    _selectedThemeValue = Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _version = packageInfo.version;
+    var prefs = await SharedPreferences.getInstance();
+    _name = prefs.getString(AppConstant.appAdminUserId);
+  }
 
   _itemBuilder(List dataList, BuildContext context, int index) {
     PostItem item = dataList[index];
     return Dismissible(
       onDismissed: (direction) {
-        PostApi.deletePost(item.sId).then((value) {
-          // print(value);
-        });
+        if (direction == DismissDirection.endToStart) {
+          PostApi.deletePost(item.sId).then((value) {
+            _refreshController.callRefresh();
+          });
+        }
+        if (direction == DismissDirection.startToEnd) {
+          if (item.published) {
+            PostApi.unpublishPost(item.sId).then((value) {
+              _refreshController.callRefresh();
+            });
+          } else {
+            PostApi.publishPost(item.sId).then((value) {
+              _refreshController.callRefresh();
+            });
+          }
+        }
       },
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: Text(
-                  IntlUtil.getString(context, Ids.homePageAlertDeleteText),
-                ),
-                actions: <Widget>[
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, false);
-                    },
-                    child: Text(
-                      IntlUtil.getString(context, Ids.no),
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context, true);
-                    },
-                    child: Text(
-                      IntlUtil.getString(context, Ids.yes),
-                    ),
-                  )
-                ],
-              );
-            },
-          );
+          return _homeHelper.getDeleteAlertDialog(context);
+        }
+        if (direction == DismissDirection.startToEnd) {
+          return _homeHelper.getPublishOrUnpublishAlertDialog(
+              context, item.published);
         }
         return false;
       },
-      background: Container(),
+      background: Container(
+        color: item.published ? Colors.orange : Colors.green,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              width: 12.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Icon(
+                item.published
+                    ? Icons.assignment_returned
+                    : Icons.assignment_turned_in,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              item.published
+                  ? IntlUtil.getString(context, Ids.homePageUnPublish)
+                  : IntlUtil.getString(context, Ids.homePagePublish),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.right,
+            ),
+          ],
+        ),
+      ),
       secondaryBackground: Container(
         color: Colors.red,
         child: Row(
@@ -112,8 +145,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                 color: Colors.green,
               )
             : Icon(
-                Icons.assignment_late,
-                color: Colors.red,
+                Icons.assignment_returned,
+                color: Colors.orange,
               ),
         title: new Text(item.title),
         subtitle: Text(
@@ -155,7 +188,61 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   void publish() async {
-    BlogApi.deploy();
+    BlogApi.deploy().then(
+      (responseValue) {
+        if (responseValue['success']) {
+          Toast.show(
+              IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
+              context,
+              duration: Toast.LENGTH_LONG);
+        }
+      },
+    );
+  }
+
+  void cleanHexo() async {
+    BlogApi.clean().then(
+      (responseValue) {
+        if (responseValue['success']) {
+          Toast.show(IntlUtil.getString(context, Ids.homePageToastCleanSuccess),
+              context,
+              duration: Toast.LENGTH_LONG);
+        }
+      },
+    );
+  }
+
+  void changedTheme(AppThemeMode appThemeMode) {
+    Navigator.pop(context);
+    switch (appThemeMode) {
+      case AppThemeMode.followSystem:
+        Provider.of<ThemeNotifier>(context, listen: false).setFollowSystem();
+        break;
+      case AppThemeMode.dark:
+        Provider.of<ThemeNotifier>(context, listen: false).setDark();
+        break;
+      case AppThemeMode.light:
+        Provider.of<ThemeNotifier>(context, listen: false).setLight();
+        break;
+    }
+    setState(() {
+      _selectedThemeValue = appThemeMode;
+    });
+  }
+
+  void github() async {
+    String github = 'https://github.com/maomishen/winwin-hexo-editor-mobile';
+    if (await canLaunch(github)) {
+      await launch(github);
+    }
+  }
+
+  void aboutApp() {
+    showAboutDialog(context: context);
+    // showLicensePage(
+    //           context: context,
+    //         );
+    // Navigator.pushNamed(context, Routing.aboutAppPage);
   }
 
   @override
@@ -172,34 +259,116 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         },
       ),
       drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(
-                Icons.publish,
-                color: Colors.blue,
+        child: Container(
+          child: Column(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  _name,
+                ),
+                accountEmail: Text(
+                  '$_version',
+                ),
               ),
-              title: Text(
-                IntlUtil.getString(context, Ids.drawPublish),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(
+                        Icons.publish,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawPublish),
+                      ),
+                      subtitle: Text(
+                        IntlUtil.getString(context, Ids.drawPublishDetail),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        publish();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.clear,
+                        color: Colors.orange,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawClean),
+                      ),
+                      subtitle: Text(
+                        IntlUtil.getString(context, Ids.drawCleanDetail),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        cleanHexo();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.info_outline,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawAppInfo),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        aboutApp();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.theaters,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawThemeMode),
+                      ),
+                      trailing: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: _selectedThemeValue,
+                          items: AppTheme.appThemeModeList(),
+                          onChanged: (value) => changedTheme(value),
+                        ),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        LineAwesomeIcons.github,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawGithub),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        github();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.exit_to_app,
+                        color: Colors.red,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawExit),
+                      ),
+                      onTap: () {
+                        exit();
+                      },
+                    ),
+                  ],
+                ),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                publish();
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: Colors.red,
-              ),
-              title: Text(
-                IntlUtil.getString(context, Ids.drawExit),
-              ),
-              onTap: () {
-                exit();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: WaveBackground(

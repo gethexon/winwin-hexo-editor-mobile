@@ -12,18 +12,34 @@ class Ids {
   static final String loadingAlertText = 'loadingAlertText';
   static final String homePageListEmptyText = 'homePageListEmptyText';
   static final String homePageAlertDeleteText = 'homePageAlertDeleteText';
+  static final String homePageAlertPublishText = 'homePageAlertPublishText';
+  static final String homePageAlertUnpublishText = 'homePageAlertUnpublishText';
+  static final String homePageUnPublish = 'homePageUnPublish';
+  static final String homePagePublish = 'homePagePublish';
+  static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
+  static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
   static final String commonNetworkError = 'commonNextWorkError';
   static final String delete = 'delete';
   static final String yes = 'Yes';
   static final String no = 'No';
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
+  static final String drawGithub = 'drawGithub';
+  static final String drawThemeMode = 'drawThemeMode';
+  static final String drawThemeListFollowSystem = 'drawThemeListFollowSystem';
+  static final String drawThemeListDark = 'drawThemeListDark';
+  static final String drawThemeListLight = 'drawThemeListLight';
+  static final String drawClean = 'drawClean';
+  static final String drawCleanDetail = 'drawCleanDetail';
   static final String drawPublish = 'drawPublish';
+  static final String drawPublishDetail = 'drawPublishDetail';
+  static final String drawAppInfo = 'drawAppInfo';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
   static final String newPostPageSaveDialogContext = 'newPostPageSaveDialogContext';
   static final String detailPostPageErrorLunchWeb = 'detailPostPageErrorLunchWeb';
+  static final String aboutPageTitle = 'aboutPageTitle';
 }
 
 Map<String, Map<String, Map<String, String>>> localizedValues = {
@@ -39,18 +55,34 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loadingAlertText: 'Loading...',
       Ids.homePageListEmptyText: 'Empty',
       Ids.homePageAlertDeleteText: 'Delete? Are you sure?',
+      Ids.homePageAlertPublishText: 'Publish?',
+      Ids.homePageAlertUnpublishText: 'Unpublish?',
+      Ids.homePageUnPublish: 'Unpublish',
+      Ids.homePagePublish: 'Publish',
+      Ids.homePageToastCleanSuccess: 'Clean Success',
+      Ids.homePageToastDeploySuccess: 'Deploy Success',
       Ids.commonNetworkError: 'Network Error',
       Ids.yes: 'Yes',
       Ids.no: 'No',
       Ids.delete: 'Delete',
       Ids.loading: 'Loading',
       Ids.drawExit: 'Logout',
-      Ids.drawPublish: 'Publish',
+      Ids.drawClean: 'Clean',
+      Ids.drawCleanDetail: 'Clean hexo database and generated public files',
+      Ids.drawPublish: 'Deploy',
+      Ids.drawPublishDetail: 'Deploy blogs',
+      Ids.drawAppInfo: 'About',
+      Ids.drawGithub: 'Source code on Github',
+      Ids.drawThemeMode: 'Theme',
+      Ids.drawThemeListFollowSystem: 'Follow System',
+      Ids.drawThemeListDark: 'Dark',
+      Ids.drawThemeListLight: 'Light',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
+      Ids.aboutPageTitle: 'About',
     }
   },
   'zh': {
@@ -65,18 +97,34 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loadingAlertText: '请求中...',
       Ids.homePageListEmptyText: '空的呢~',
       Ids.homePageAlertDeleteText: '确定删除吗?',
+      Ids.homePageAlertPublishText: '发布吗?',
+      Ids.homePageAlertUnpublishText: '取消发布吗?',
+      Ids.homePageUnPublish: '不发布',
+      Ids.homePagePublish: '发布',
+      Ids.homePageToastCleanSuccess: '清理成功',
+      Ids.homePageToastDeploySuccess: '发布成功',
       Ids.commonNetworkError: '网络请求错误',
       Ids.yes: '是的',
       Ids.no: '不',
       Ids.delete: '删除',
       Ids.loading: '载入中',
       Ids.drawExit: '退出登录',
-      Ids.drawPublish: '发布',
+      Ids.drawClean: '清除Hexo数据',
+      Ids.drawCleanDetail: '清理hexo数据库和生成的文件',
+      Ids.drawPublish: '部署',
+      Ids.drawPublishDetail: '部署所有博客',
+      Ids.drawAppInfo: '关于',
+      Ids.drawGithub: 'Github 源码',
+      Ids.drawThemeMode: '主题',
+      Ids.drawThemeListFollowSystem: '跟随系统',
+      Ids.drawThemeListDark: '暗黑模式',
+      Ids.drawThemeListLight: '正常模式',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
+      Ids.aboutPageTitle: '关于我们',
     },
   }
 };

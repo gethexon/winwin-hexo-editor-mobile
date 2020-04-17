@@ -83,6 +83,8 @@ class _LoginPageState extends State<LoginPage>
         prefs.setString(AppConstant.appAdminUserId, userId);
         var token = responseValue['data']['token'];
         prefs.setString(AppConstant.appAdminUserToken, token);
+        var refreshToken = responseValue['data']['refreshToken'];
+        prefs.setString(AppConstant.appAdminRefreshToken, refreshToken);
         Navigator.popAndPushNamed(context, Routing.homePage);
       } else {
         Toast.show(responseValue['message'], context,

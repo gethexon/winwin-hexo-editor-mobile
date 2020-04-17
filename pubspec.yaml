@@ -1,7 +1,7 @@
 name: winwin_hexo_editor_mobile
 description: A new Flutter project.
 
-version: 1.0.0+3
+version: 1.1.0+4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -11,8 +11,10 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-
-  cupertino_icons: ^0.1.2
+  
+  sentry: ">=3.0.0 <4.0.0"
+  package_info: ^0.4.0+16
+  line_awesome_icons: ^1.0.4+2
   after_layout: ^1.0.7+2
   dio: ^3.0.9
   shared_preferences: ^0.5.6+3
@@ -24,6 +26,7 @@ dependencies:
   quill_delta: ^1.0.1
   flutter_markdown: ^0.3.4
   url_launcher: ^5.4.2
+  provider: ^4.0.5
 
 dev_dependencies:
   flutter_test:

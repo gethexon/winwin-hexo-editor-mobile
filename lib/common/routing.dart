@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:winwin_hexo_editor_mobile/pages/about/about.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home.dart';
 import 'package:winwin_hexo_editor_mobile/pages/loading.dart';
 import 'package:winwin_hexo_editor_mobile/pages/new/new.dart';
@@ -10,12 +11,14 @@ class Routing {
   static final String loginPage = '/login';
   static final String homePage = '/home';
   static final String newPostPage = '/new_post';
+  static final String aboutAppPage = '/about_app';
   static final String postDetailPage = '/detail_post/';
 
   static final Map<String, WidgetBuilder> routes = {
     loadingPage: (context) => LoadingPage(),
     loginPage: (context) => LoginPage(),
     homePage: (context) => HomePage(),
+    aboutAppPage: (context) => AboutPage(),
     newPostPage: (context) => NewPostPage(),
   };
 
