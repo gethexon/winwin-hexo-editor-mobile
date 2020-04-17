@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluintl/fluintl.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:sentry/sentry.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
 
 import 'common/routing.dart';
 import 'i18n/i18n.dart';
@@ -38,7 +40,7 @@ _reportError(dynamic error, dynamic stackTrace) async {
   }
 }
 
-void main() {
+void main() async {
   FlutterError.onError = (FlutterErrorDetails details) async {
     if (isInDebugMode) {
       FlutterError.dumpErrorToConsole(details);
@@ -46,7 +48,6 @@ void main() {
       Zone.current.handleUncaughtError(details.exception, details.stack);
     }
   };
-
   setLocalizedValues(localizedValues);
   runZoned(() async {
     runApp(MyApp());
@@ -58,21 +59,31 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: AppConstant.navigatorKey,
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (context) => IntlUtil.getString(context, Ids.appTitle),
-      theme: AppTheme.getThemeData(isDarkMode: false),
-      darkTheme: AppTheme.getThemeData(isDarkMode: true),
-      initialRoute: Routing.loadingPage,
-      onGenerateRoute: Routing.generateRoute,
-      routes: Routing.routes,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        CustomLocalizations.delegate
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeNotifier()),
       ],
-      supportedLocales: CustomLocalizations.supportedLocales,
+      child: Consumer<ThemeNotifier>(
+        builder: (context, themeNotifier, _) {
+          return MaterialApp(
+            navigatorKey: AppConstant.navigatorKey,
+            debugShowCheckedModeBanner: false,
+            onGenerateTitle: (context) =>
+                IntlUtil.getString(context, Ids.appTitle),
+            theme: AppTheme.getThemeData(isDarkMode: !themeNotifier.light),
+            darkTheme: AppTheme.getThemeData(isDarkMode: themeNotifier.dark),
+            initialRoute: Routing.loadingPage,
+            onGenerateRoute: Routing.generateRoute,
+            routes: Routing.routes,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              CustomLocalizations.delegate
+            ],
+            supportedLocales: CustomLocalizations.supportedLocales,
+          );
+        },
+      ),
     );
   }
 }

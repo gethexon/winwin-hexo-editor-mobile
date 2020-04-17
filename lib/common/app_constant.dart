@@ -9,5 +9,8 @@ class AppConstant {
   static final String appAdminUserToken = 'appAdminUserToken';
   static final String appAdminRefreshToken = 'appAdminRefreshToken';
 
+  static final String appThemeDark = 'appThemeDark';
+  static final String appThemeLight = 'appThemeLight';
+
   static final GlobalKey navigatorKey = GlobalKey<NavigatorState>();
 }

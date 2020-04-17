@@ -25,6 +25,10 @@ class Ids {
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
   static final String drawGithub = 'drawGithub';
+  static final String drawThemeMode = 'drawThemeMode';
+  static final String drawThemeListFollowSystem = 'drawThemeListFollowSystem';
+  static final String drawThemeListDark = 'drawThemeListDark';
+  static final String drawThemeListLight = 'drawThemeListLight';
   static final String drawClean = 'drawClean';
   static final String drawCleanDetail = 'drawCleanDetail';
   static final String drawPublish = 'drawPublish';
@@ -69,6 +73,10 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawPublishDetail: 'Deploy blogs',
       Ids.drawAppInfo: 'About',
       Ids.drawGithub: 'Source code on Github',
+      Ids.drawThemeMode: 'Theme',
+      Ids.drawThemeListFollowSystem: 'Follow System',
+      Ids.drawThemeListDark: 'Dark',
+      Ids.drawThemeListLight: 'Light',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
@@ -107,6 +115,10 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawPublishDetail: '部署所有博客',
       Ids.drawAppInfo: '关于',
       Ids.drawGithub: 'Github 源码',
+      Ids.drawThemeMode: '主题',
+      Ids.drawThemeListFollowSystem: '跟随系统',
+      Ids.drawThemeListDark: '暗黑模式',
+      Ids.drawThemeListLight: '正常模式',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',

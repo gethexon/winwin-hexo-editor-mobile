@@ -1,7 +1,72 @@
+import 'package:fluintl/fluintl.dart';
 import 'package:flutter/material.dart';
+import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
+import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
+
+enum AppThemeMode {
+  followSystem,
+  dark,
+  light,
+}
 
 class AppTheme {
-  static ThemeData getThemeData({bool isDarkMode = false}) { 
+  static Widget getThemeDrawItem(AppThemeMode appThemeMode) {
+    switch (appThemeMode) {
+      case AppThemeMode.followSystem:
+        return Text(
+          IntlUtil.getString(AppConstant.navigatorKey.currentContext,
+              Ids.drawThemeListFollowSystem),
+        );
+      case AppThemeMode.dark:
+        return Text(
+          IntlUtil.getString(
+              AppConstant.navigatorKey.currentContext, Ids.drawThemeListDark),
+        );
+      case AppThemeMode.light:
+        return Text(
+          IntlUtil.getString(
+              AppConstant.navigatorKey.currentContext, Ids.drawThemeListLight),
+        );
+    }
+    return Text(
+      IntlUtil.getString(AppConstant.navigatorKey.currentContext,
+          Ids.drawThemeListFollowSystem),
+    );
+  }
+
+  static List<DropdownMenuItem<AppThemeMode>> appThemeModeList() {
+    var list = List<DropdownMenuItem<AppThemeMode>>();
+    list.add(
+      DropdownMenuItem(
+        value: AppThemeMode.followSystem,
+        child: Text(
+          IntlUtil.getString(AppConstant.navigatorKey.currentContext,
+              Ids.drawThemeListFollowSystem),
+        ),
+      ),
+    );
+    list.add(
+      DropdownMenuItem(
+        value: AppThemeMode.dark,
+        child: Text(
+          IntlUtil.getString(
+              AppConstant.navigatorKey.currentContext, Ids.drawThemeListDark),
+        ),
+      ),
+    );
+    list.add(
+      DropdownMenuItem(
+        value: AppThemeMode.light,
+        child: Text(
+          IntlUtil.getString(
+              AppConstant.navigatorKey.currentContext, Ids.drawThemeListLight),
+        ),
+      ),
+    );
+    return list;
+  }
+
+  static ThemeData getThemeData({bool isDarkMode = false}) {
     return ThemeData(
       errorColor: isDarkMode ? Colors.red : Colors.red,
       brightness: isDarkMode ? Brightness.dark : Brightness.light,

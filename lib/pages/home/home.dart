@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
@@ -9,6 +10,7 @@ import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
+import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
 import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
@@ -31,6 +33,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   HomeHelper _homeHelper = HomeHelper();
   String _version = '';
   String _name = '';
+  AppThemeMode _selectedThemeValue;
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
 
   @override
   void afterFirstLayout(BuildContext context) async {
+    _selectedThemeValue = Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _version = packageInfo.version;
     var prefs = await SharedPreferences.getInstance();
@@ -208,6 +212,24 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     );
   }
 
+  void changedTheme(AppThemeMode appThemeMode) {
+    Navigator.pop(context);
+    switch (appThemeMode) {
+      case AppThemeMode.followSystem:
+        Provider.of<ThemeNotifier>(context, listen: false).setFollowSystem();
+        break;
+      case AppThemeMode.dark:
+        Provider.of<ThemeNotifier>(context, listen: false).setDark();
+        break;
+      case AppThemeMode.light:
+        Provider.of<ThemeNotifier>(context, listen: false).setLight();
+        break;
+    }
+    setState(() {
+      _selectedThemeValue = appThemeMode;
+    });
+  }
+
   void github() async {
     String github = 'https://github.com/maomishen/winwin-hexo-editor-mobile';
     if (await canLaunch(github)) {
@@ -296,6 +318,24 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                         Navigator.pop(context);
                         aboutApp();
                       },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.theaters,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawThemeMode),
+                      ),
+                      trailing: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: _selectedThemeValue,
+                          items: AppTheme.appThemeModeList(),
+                          onChanged: (value) => changedTheme(value),
+                        ),
+                      ),
                     ),
                     ListTile(
                       leading: Icon(
