@@ -5,4 +5,8 @@ class BlogApi {
   static Future<dynamic> deploy() async {
     return await BaseApi().postRequestWithAuth(AppApiAddress.deployBlog, null);
   }
+
+  static Future<dynamic> clean() async {
+    return await BaseApi().postRequestWithAuth(AppApiAddress.cleanHexo, null);
+  }
 }

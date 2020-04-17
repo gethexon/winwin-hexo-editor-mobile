@@ -16,13 +16,19 @@ class Ids {
   static final String homePageAlertUnpublishText = 'homePageAlertUnpublishText';
   static final String homePageUnPublish = 'homePageUnPublish';
   static final String homePagePublish = 'homePagePublish';
+  static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
+  static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
   static final String commonNetworkError = 'commonNextWorkError';
   static final String delete = 'delete';
   static final String yes = 'Yes';
   static final String no = 'No';
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
+  static final String drawClean = 'drawClean';
+  static final String drawCleanDetail = 'drawCleanDetail';
   static final String drawPublish = 'drawPublish';
+  static final String drawPublishDetail = 'drawPublishDetail';
+  static final String drawAppInfo = 'drawAppInfo';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
@@ -47,13 +53,19 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageAlertUnpublishText: 'Unpublish?',
       Ids.homePageUnPublish: 'Unpublish',
       Ids.homePagePublish: 'Publish',
+      Ids.homePageToastCleanSuccess: 'Clean Success',
+      Ids.homePageToastDeploySuccess: 'Deploy Success',
       Ids.commonNetworkError: 'Network Error',
       Ids.yes: 'Yes',
       Ids.no: 'No',
       Ids.delete: 'Delete',
       Ids.loading: 'Loading',
       Ids.drawExit: 'Logout',
+      Ids.drawClean: 'Clean',
+      Ids.drawCleanDetail: 'Clean hexo database and generated public files',
       Ids.drawPublish: 'Deploy',
+      Ids.drawPublishDetail: 'Deploy blogs',
+      Ids.drawAppInfo: 'About',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
@@ -77,13 +89,19 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageAlertUnpublishText: '取消发布吗?',
       Ids.homePageUnPublish: '不发布',
       Ids.homePagePublish: '发布',
+      Ids.homePageToastCleanSuccess: '清理成功',
+      Ids.homePageToastDeploySuccess: '发布成功',
       Ids.commonNetworkError: '网络请求错误',
       Ids.yes: '是的',
       Ids.no: '不',
       Ids.delete: '删除',
       Ids.loading: '载入中',
       Ids.drawExit: '退出登录',
+      Ids.drawClean: '清除Hexo数据',
+      Ids.drawCleanDetail: '清理hexo数据库和生成的文件',
       Ids.drawPublish: '部署',
+      Ids.drawPublishDetail: '部署所有博客',
+      Ids.drawAppInfo: '关于',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',

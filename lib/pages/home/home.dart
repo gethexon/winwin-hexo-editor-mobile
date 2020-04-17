@@ -14,6 +14,7 @@ import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:toast/toast.dart';
 import 'package:fluintl/fluintl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info/package_info.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -25,6 +26,9 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   EasyRefreshController _refreshController = EasyRefreshController();
   GlobalKey _scaffoldKey;
   HomeHelper _homeHelper = HomeHelper();
+  String _version = '';
+  String _buildNumber = '';
+  String _name = '';
 
   @override
   void initState() {
@@ -33,7 +37,13 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   @override
-  void afterFirstLayout(BuildContext context) async {}
+  void afterFirstLayout(BuildContext context) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    _version = packageInfo.version;
+    _buildNumber = packageInfo.buildNumber;
+    var prefs = await SharedPreferences.getInstance();
+    _name = prefs.getString(AppConstant.appAdminUserId);
+  }
 
   _itemBuilder(List dataList, BuildContext context, int index) {
     PostItem item = dataList[index];
@@ -173,7 +183,27 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   void publish() async {
-    BlogApi.deploy();
+    BlogApi.deploy().then(
+      (responseValue) {
+        if (responseValue['success']) {
+          Toast.show(IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
+              context,
+              duration: Toast.LENGTH_LONG);
+        }
+      },
+    );
+  }
+
+  void cleanHexo() async {
+    BlogApi.clean().then(
+      (responseValue) {
+        if (responseValue['success']) {
+          Toast.show(IntlUtil.getString(context, Ids.homePageToastCleanSuccess),
+              context,
+              duration: Toast.LENGTH_LONG);
+        }
+      },
+    );
   }
 
   @override
@@ -190,34 +220,82 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         },
       ),
       drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(
-                Icons.publish,
-                color: Colors.blue,
+        child: Container(
+          child: Column(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  _name,
+                ),
+                accountEmail: Text(
+                  '$_version ($_buildNumber)',
+                ),
               ),
-              title: Text(
-                IntlUtil.getString(context, Ids.drawPublish),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    ListTile(
+                      leading: Icon(
+                        Icons.publish,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawPublish),
+                      ),
+                      subtitle: Text(
+                        IntlUtil.getString(context, Ids.drawPublishDetail),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        publish();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.clear,
+                        color: Colors.orange,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawClean),
+                      ),
+                      subtitle: Text(
+                        IntlUtil.getString(context, Ids.drawCleanDetail),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        cleanHexo();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.info_outline,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawAppInfo),
+                      ),
+                      onTap: () {
+                        exit();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.exit_to_app,
+                        color: Colors.red,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawExit),
+                      ),
+                      onTap: () {
+                        exit();
+                      },
+                    ),
+                  ],
+                ),
               ),
-              onTap: () {
-                Navigator.pop(context);
-                publish();
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: Colors.red,
-              ),
-              title: Text(
-                IntlUtil.getString(context, Ids.drawExit),
-              ),
-              onTap: () {
-                exit();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       body: WaveBackground(
