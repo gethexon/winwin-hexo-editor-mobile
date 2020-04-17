@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: AppConstant.navigatorKey,
       debugShowCheckedModeBanner: false,
       onGenerateTitle: (context) => IntlUtil.getString(context, Ids.appTitle),
       theme: ThemeData(
