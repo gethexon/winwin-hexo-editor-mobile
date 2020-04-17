@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-
-  static bool darkMode;
-
-  static ThemeData getThemeData({bool isDarkMode}) { 
-    darkMode = isDarkMode;
+  static ThemeData getThemeData({bool isDarkMode = false}) { 
     return ThemeData(
       errorColor: isDarkMode ? Colors.red : Colors.red,
       brightness: isDarkMode ? Brightness.dark : Brightness.light,

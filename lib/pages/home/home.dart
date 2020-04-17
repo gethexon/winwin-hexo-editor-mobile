@@ -300,7 +300,9 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                     ListTile(
                       leading: Icon(
                         LineAwesomeIcons.github,
-                        color: AppTheme.darkMode ? Colors.white : Colors.black,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
                       ),
                       title: Text(
                         IntlUtil.getString(context, Ids.drawGithub),
