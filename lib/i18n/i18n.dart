@@ -34,6 +34,7 @@ class Ids {
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
   static final String newPostPageSaveDialogContext = 'newPostPageSaveDialogContext';
   static final String detailPostPageErrorLunchWeb = 'detailPostPageErrorLunchWeb';
+  static final String aboutPageTitle = 'aboutPageTitle';
 }
 
 Map<String, Map<String, Map<String, String>>> localizedValues = {
@@ -71,6 +72,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogTitle: 'Save',
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
+      Ids.aboutPageTitle: 'About',
     }
   },
   'zh': {
@@ -107,6 +109,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogTitle: '保存',
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
+      Ids.aboutPageTitle: '关于我们',
     },
   }
 };

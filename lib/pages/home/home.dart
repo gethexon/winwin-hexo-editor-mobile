@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   GlobalKey _scaffoldKey;
   HomeHelper _homeHelper = HomeHelper();
   String _version = '';
-  String _buildNumber = '';
   String _name = '';
 
   @override
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   void afterFirstLayout(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _version = packageInfo.version;
-    _buildNumber = packageInfo.buildNumber;
     var prefs = await SharedPreferences.getInstance();
     _name = prefs.getString(AppConstant.appAdminUserId);
   }
@@ -206,6 +204,14 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     );
   }
 
+  void aboutApp() {
+    showAboutDialog(context: context);
+    // showLicensePage(
+    //           context: context,
+    //         );
+    // Navigator.pushNamed(context, Routing.aboutAppPage);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -228,7 +234,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                   _name,
                 ),
                 accountEmail: Text(
-                  '$_version ($_buildNumber)',
+                  '$_version',
                 ),
               ),
               Expanded(
@@ -276,7 +282,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                         IntlUtil.getString(context, Ids.drawAppInfo),
                       ),
                       onTap: () {
-                        exit();
+                        Navigator.pop(context);
+                        aboutApp();
                       },
                     ),
                     ListTile(
