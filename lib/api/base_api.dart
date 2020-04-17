@@ -20,7 +20,6 @@ class BaseApi {
   static Dio dio;
 
   BaseApi._();
-  // BaseApi._(){}
 
   static BaseApi _sharedInstance() {
     if (_instance == null) {
