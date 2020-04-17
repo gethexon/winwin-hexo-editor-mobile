@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
@@ -15,6 +16,7 @@ import 'package:toast/toast.dart';
 import 'package:fluintl/fluintl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:package_info/package_info.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -184,7 +186,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     BlogApi.deploy().then(
       (responseValue) {
         if (responseValue['success']) {
-          Toast.show(IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
+          Toast.show(
+              IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
               context,
               duration: Toast.LENGTH_LONG);
         }
@@ -202,6 +205,13 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         }
       },
     );
+  }
+
+  void github() async {
+    String github = 'https://github.com/maomishen/winwin-hexo-editor-mobile';
+    if (await canLaunch(github)) {
+      await launch(github);
+    }
   }
 
   void aboutApp() {
@@ -284,6 +294,19 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                       onTap: () {
                         Navigator.pop(context);
                         aboutApp();
+                      },
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        LineAwesomeIcons.github,
+                        color: Colors.black,
+                      ),
+                      title: Text(
+                        IntlUtil.getString(context, Ids.drawGithub),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        github();
                       },
                     ),
                     ListTile(

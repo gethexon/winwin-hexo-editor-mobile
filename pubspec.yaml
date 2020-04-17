@@ -14,7 +14,7 @@ dependencies:
   
   sentry: ">=3.0.0 <4.0.0"
   package_info: ^0.4.0+16
-  cupertino_icons: ^0.1.2
+  line_awesome_icons: ^1.0.4+2
   after_layout: ^1.0.7+2
   dio: ^3.0.9
   shared_preferences: ^0.5.6+3
