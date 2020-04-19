@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
+import 'package:winwin_hexo_editor_mobile/common/notification.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
@@ -39,11 +40,13 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   void initState() {
     super.initState();
     _scaffoldKey = GlobalKey();
+    AppNotification.checkNotification();
   }
 
   @override
   void afterFirstLayout(BuildContext context) async {
-    _selectedThemeValue = Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
+    _selectedThemeValue =
+        Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _version = packageInfo.version;
     var prefs = await SharedPreferences.getInstance();
@@ -191,10 +194,12 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     BlogApi.deploy().then(
       (responseValue) {
         if (responseValue['success']) {
-          Toast.show(
-              IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
-              context,
-              duration: Toast.LENGTH_LONG);
+          AppNotification().showNotification(
+              IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
+          // Toast.show(
+          //     IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
+          //     context,
+          //     duration: Toast.LENGTH_LONG);
         }
       },
     );
@@ -245,6 +250,12 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     // Navigator.pushNamed(context, Routing.aboutAppPage);
   }
 
+  void createNewPost() {
+    // Navigator.pushNamed(context, Routing.newPostPage);
+    AppNotification().showNotification(
+        IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -255,7 +266,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.pushNamed(context, Routing.newPostPage);
+          createNewPost();
         },
       ),
       drawer: Drawer(
