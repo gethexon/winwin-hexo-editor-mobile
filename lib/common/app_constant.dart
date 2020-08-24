@@ -8,6 +8,7 @@ class AppConstant {
   static final String appAdminUserId = 'appAdminUserId';
   static final String appAdminUserToken = 'appAdminUserToken';
   static final String appAdminRefreshToken = 'appAdminRefreshToken';
+  static final String appRequestNotificationPermissions = 'appRequestNotificationPermissions';
 
   static final String appThemeDark = 'appThemeDark';
   static final String appThemeLight = 'appThemeLight';

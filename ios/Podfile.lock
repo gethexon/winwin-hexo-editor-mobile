@@ -1,5 +1,9 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_local_notifications (0.0.1):
+    - Flutter
+  - notification_permissions (0.4.4):
+    - Flutter
   - package_info (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
@@ -17,6 +21,8 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - notification_permissions (from `.symlinks/plugins/notification_permissions/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
@@ -28,6 +34,10 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  notification_permissions:
+    :path: ".symlinks/plugins/notification_permissions/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   shared_preferences:
@@ -45,6 +55,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
+  notification_permissions: b74860c2967c1579243a675e63cd55e0ae75cef7
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087

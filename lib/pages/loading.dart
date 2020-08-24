@@ -28,8 +28,6 @@ class _LoadingPageState extends State<LoadingPage>
     } else {
       Navigator.popAndPushNamed(context, Routing.homePage);
     }
-    
-
     // Navigator.pushReplacement(context,
     //     MaterialPageRoute(builder: (BuildContext context) {
     //   return WillPopScope(

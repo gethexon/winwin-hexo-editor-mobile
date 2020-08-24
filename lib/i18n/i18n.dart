@@ -19,9 +19,11 @@ class Ids {
   static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
   static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
   static final String commonNetworkError = 'commonNextWorkError';
+  static final String notificationPermissionsRequest = 'notificationPermissionsRequest';
   static final String delete = 'delete';
   static final String yes = 'Yes';
   static final String no = 'No';
+  static final String never = 'never';
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
   static final String drawGithub = 'drawGithub';
@@ -65,8 +67,10 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageToastCleanSuccess: 'Clean Success',
       Ids.homePageToastDeploySuccess: 'Deploy Success',
       Ids.commonNetworkError: 'Network Error',
+      Ids.notificationPermissionsRequest: 'We want to let you know when deploy success, so we need to get notification permission.',
       Ids.yes: 'Yes',
       Ids.no: 'No',
+      Ids.never: 'Never',
       Ids.delete: 'Delete',
       Ids.loading: 'Loading',
       Ids.drawExit: 'Logout',
@@ -110,8 +114,10 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageToastCleanSuccess: '清理成功',
       Ids.homePageToastDeploySuccess: '发布成功',
       Ids.commonNetworkError: '网络请求错误',
+      Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
       Ids.no: '不',
+      Ids.never: '永不',
       Ids.delete: '删除',
       Ids.loading: '载入中',
       Ids.drawExit: '退出登录',
