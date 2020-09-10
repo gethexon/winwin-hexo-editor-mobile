@@ -1,0 +1,675 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "@winwin/hexo-editor-api",
+    "version": "0.1.0",
+    "description": "An api definition for @winwin/hexo-editor",
+    "contact": {
+      "email": "yjh2011@live.com",
+      "name": "winwin2011",
+      "url": "https://github.com/yuJianghao/winwin-hexo-editor-server"
+    },
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5777/hexoeditorserver"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "summary": "Actions about posts",
+      "get": {
+        "summary": "Get all posts",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "posts": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Post"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "info"
+        ]
+      }
+    },
+    "/tags": {
+      "summary": "Actions about tags",
+      "get": {
+        "summary": "Get all tags",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "tags": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Tag"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "info"
+        ]
+      }
+    },
+    "/categories": {
+      "summary": "Actions about categories",
+      "get": {
+        "summary": "Get all categories",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "categories": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Category"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "info"
+        ]
+      }
+    },
+    "/post/{id}": {
+      "summary": "Actions about one specific post",
+      "get": {
+        "summary": "Get post by id",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "post": {
+        "summary": "Add post by options",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Post object needs to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "put": {
+        "summary": "Update post by id and options",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Post object needs to add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      },
+      "delete": {
+        "summary": "Delete post by id",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "/post/{id}/publish": {
+      "post": {
+        "summary": "Publish post by id",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "/post/{id}/unpublish": {
+      "post": {
+        "summary": "Unpublish post by id",
+        "description": "",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the post",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Post200"
+          },
+          "404": {
+            "$ref": "#/components/responses/Post404"
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "post"
+        ]
+      }
+    },
+    "/reload": {
+      "post": {
+        "summary": "Reload hexo data from files",
+        "description": "",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "hexo action"
+        ]
+      }
+    },
+    "/deploy": {
+      "post": {
+        "summary": "Deploy blog",
+        "description": "Run `hexo g -d`",
+        "operationId": "",
+        "responses": {
+          "503": {
+            "description": "Hexo deploy config not exits, can't deploy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "hexo action"
+        ]
+      }
+    },
+    "/clean": {
+      "post": {
+        "summary": "Clean hexo database and generated public files",
+        "description": "Run `hexo clean`",
+        "operationId": "",
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "hexo action"
+        ]
+      }
+    },
+    "/sync": {
+      "post": {
+        "summary": "Download files from git remote origin",
+        "description": "Run `git reset --hard && git pull`",
+        "operationId": "",
+        "responses": {
+          "503": {
+            "description": "DNot a git repo or do not have remote origin, can't pull",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "git action"
+        ]
+      }
+    },
+    "/reset": {
+      "post": {
+        "summary": "Reset files from git",
+        "description": "Run `git reset --hard`",
+        "operationId": "",
+        "responses": {
+          "503": {
+            "description": "Not a git repo, can't reset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "git action"
+        ]
+      }
+    },
+    "/save": {
+      "post": {
+        "summary": "Save files to git remote origin",
+        "description": "Run `git add. && git commit && git push`",
+        "operationId": "",
+        "responses": {
+          "503": {
+            "description": "Not a git repo or do not have remote origin, can't pull",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseBody"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DefaultError"
+          }
+        },
+        "tags": [
+          "git action"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "raw": {
+            "type": "string"
+          },
+          "layout": {
+            "type": "string"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "categories": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "Tag": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "permalink": {
+            "type": "string"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "length": {
+            "type": "integer"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "permalink": {
+            "type": "string"
+          },
+          "posts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "length": {
+            "type": "integer"
+          }
+        }
+      },
+      "ErrorResponseBody": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "DefaultError": {
+        "description": "Unexpected Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseBody"
+            }
+          }
+        }
+      },
+      "Post404": {
+        "description": "Post required not fould",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseBody"
+            }
+          }
+        }
+      },
+      "Post200": {
+        "description": "OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "post": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Post"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
