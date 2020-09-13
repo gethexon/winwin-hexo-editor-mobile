@@ -15,3 +15,6 @@ https://pub.dev/packages/flutter_launcher_icons
 ```
 flutter pub run flutter_launcher_icons:main
 ```
+
+
+{"url":"https://your_url_address","token":"token_value"}

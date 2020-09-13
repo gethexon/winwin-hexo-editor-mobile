@@ -41,19 +41,25 @@ class BaseApi {
   final String authTag = "Authorization";
 
   Future<dynamic> getRequestWithAuth(
-      String url, Map<String, dynamic> parameters) async {
+      String url, Map<String, dynamic> parameters,
+      {String qrToken}) async {
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
-    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var token;
+    if (qrToken == null || qrToken == '') {
+      token = prefs.getString(AppConstant.appAdminUserToken);
+    } else {
+      token = qrToken;
+    }
     var returnValue;
     try {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .get(server + url, queryParameters: parameters, options: options);
+      Response response = await dio.get(server + url,
+          queryParameters: parameters, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
@@ -62,19 +68,25 @@ class BaseApi {
   }
 
   Future<dynamic> postRequestWithAuth(
-      String url, Map<String, dynamic> parameters) async {
+      String url, Map<String, dynamic> parameters,
+      {String qrToken}) async {
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
-    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var token;
+    if (qrToken == null || qrToken == '') {
+      token = prefs.getString(AppConstant.appAdminUserToken);
+    } else {
+      token = qrToken;
+    }
     var returnValue;
     try {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .post(server + url, data: parameters, options: options);
+      Response response =
+          await dio.post(server + url, data: parameters, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
@@ -94,8 +106,8 @@ class BaseApi {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .delete(server + url, data: parameters, options: options);
+      Response response =
+          await dio.delete(server + url, data: parameters, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;

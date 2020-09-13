@@ -1,6 +1,7 @@
 class AppApiAddress {
-  static const String login = '/token';
-  static const String refreshToken = '/token/refresh';
+  static const String login = '/auth/token';
+  static const String refreshToken = '/auth/refresh';
+  static const String registeDevice = '/auth/apikey';
   static const String posts = '/hexoeditorserver/posts';
   static const String post = '/hexoeditorserver/post/{id}';
   static const String postPublish = '/hexoeditorserver/post/{id}/publish';

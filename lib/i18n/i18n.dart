@@ -3,12 +3,13 @@ class Ids {
   static final String loginPageServerHint = 'loginPage_serverHint';
   static final String loginPageUserHint = 'loginPage_userHint';
   static final String loginPagePasswordHint = 'loginPage_passwordHint';
-  static final String loginPageLoginButton = 'loginPageLoginButton';
+  static final String loginPageScanQrCodeButton = 'loginPageScanQrCodeButton';
   static final String loginPageGithubButton = 'loginPageGithubButton';
   static final String loginPageWelcomBack = 'loginPageWelcomBack';
   static final String loginPageServerEmptyError = 'loginPageServerEmptyError';
   static final String loginPageUserEmptyError = 'loginPageUserEmptyError';
-  static final String loginPagePasswordEmptyError = 'loginPagePasswordEmptyError';
+  static final String loginPagePasswordEmptyError =
+      'loginPagePasswordEmptyError';
   static final String loadingAlertText = 'loadingAlertText';
   static final String homePageListEmptyText = 'homePageListEmptyText';
   static final String homePageAlertDeleteText = 'homePageAlertDeleteText';
@@ -19,7 +20,8 @@ class Ids {
   static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
   static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
   static final String commonNetworkError = 'commonNextWorkError';
-  static final String notificationPermissionsRequest = 'notificationPermissionsRequest';
+  static final String notificationPermissionsRequest =
+      'notificationPermissionsRequest';
   static final String delete = 'delete';
   static final String yes = 'Yes';
   static final String no = 'No';
@@ -39,8 +41,10 @@ class Ids {
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
-  static final String newPostPageSaveDialogContext = 'newPostPageSaveDialogContext';
-  static final String detailPostPageErrorLunchWeb = 'detailPostPageErrorLunchWeb';
+  static final String newPostPageSaveDialogContext =
+      'newPostPageSaveDialogContext';
+  static final String detailPostPageErrorLunchWeb =
+      'detailPostPageErrorLunchWeb';
   static final String aboutPageTitle = 'aboutPageTitle';
 }
 
@@ -51,7 +55,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageServerHint: 'Your winwin address (eg. http://xxx:5777)',
       Ids.loginPageUserHint: 'Your winwin user name (default: admin)',
       Ids.loginPagePasswordHint: 'Your winwin password (default: admin)',
-      Ids.loginPageLoginButton: 'Login',
+      Ids.loginPageScanQrCodeButton: 'Scan QR code',
       Ids.loginPageGithubButton: 'About winwin Hexo editor',
       Ids.loginPageWelcomBack: 'Welcome\nBack',
       Ids.loginPagePasswordEmptyError: 'You need to input a password',
@@ -67,7 +71,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageToastCleanSuccess: 'Clean Success',
       Ids.homePageToastDeploySuccess: 'Deploy Success',
       Ids.commonNetworkError: 'Network Error',
-      Ids.notificationPermissionsRequest: 'We want to let you know when deploy success, so we need to get notification permission.',
+      Ids.notificationPermissionsRequest:
+          'We want to let you know when deploy success, so we need to get notification permission.',
       Ids.yes: 'Yes',
       Ids.no: 'No',
       Ids.never: 'Never',
@@ -98,7 +103,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageServerHint: '您的winwin地址 (例如：http://xxx:5777)',
       Ids.loginPageUserHint: '您的winwin登录名（默认admin)',
       Ids.loginPagePasswordHint: '您的winwin密码（默认admin)',
-      Ids.loginPageLoginButton: '登录',
+      Ids.loginPageScanQrCodeButton: '扫描二维码',
       Ids.loginPageWelcomBack: '欢迎\n  回来',
       Ids.loginPagePasswordEmptyError: '请输入密码',
       Ids.loginPageUserEmptyError: '请输入登录名',

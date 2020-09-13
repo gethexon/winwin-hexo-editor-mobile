@@ -12,7 +12,6 @@ import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
-import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
@@ -50,7 +49,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     _version = packageInfo.version;
     var prefs = await SharedPreferences.getInstance();
-    _name = prefs.getString(AppConstant.appAdminUserId);
+    // _name = prefs.getString(AppConstant.appAdminUserId);
   }
 
   _itemBuilder(List dataList, BuildContext context, int index) {
@@ -152,10 +151,12 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                 color: Colors.orange,
               ),
         title: new Text(item.title),
-        subtitle: Text(
-          item.sContent,
-          maxLines: 2,
-        ),
+        subtitle: item.categories == null
+            ? SizedBox()
+            : Text(
+                item.categories,
+                maxLines: 2,
+              ),
         trailing: new Icon(Icons.keyboard_arrow_right),
         onTap: () {
           Navigator.pushNamed(context, Routing.postDetailPage + item.sId);
@@ -251,9 +252,9 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   void createNewPost() {
-    // Navigator.pushNamed(context, Routing.newPostPage);
-    AppNotification().showNotification(
-        IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
+    Navigator.pushNamed(context, Routing.newPostPage);
+    // AppNotification().showNotification(
+    //     IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
   }
 
   @override
@@ -382,29 +383,27 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
           ),
         ),
       ),
-      body: WaveBackground(
-        child: SafeArea(
-          child: EasyRefresh(
-            firstRefresh: true,
-            controller: _refreshController,
-            header: MaterialHeader(),
-            footer: MaterialFooter(),
-            onRefresh: _initRequester,
-            child: ListView.builder(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              itemCount: _postLists.length,
-              itemBuilder: (context, index) {
-                return _itemBuilder(_postLists, context, index);
-              },
-            ),
-            emptyWidget: _postLists.length == 0
-                ? Center(
-                    child: Text(
-                      IntlUtil.getString(context, Ids.homePageListEmptyText),
-                    ),
-                  )
-                : null,
+      body: SafeArea(
+        child: EasyRefresh(
+          firstRefresh: true,
+          controller: _refreshController,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          onRefresh: _initRequester,
+          child: ListView.builder(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            itemCount: _postLists.length,
+            itemBuilder: (context, index) {
+              return _itemBuilder(_postLists, context, index);
+            },
           ),
+          emptyWidget: _postLists.length == 0
+              ? Center(
+                  child: Text(
+                    IntlUtil.getString(context, Ids.homePageListEmptyText),
+                  ),
+                )
+              : null,
         ),
       ),
     );
