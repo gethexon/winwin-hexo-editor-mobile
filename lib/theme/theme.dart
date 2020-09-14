@@ -42,6 +42,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(AppConstant.navigatorKey.currentContext,
               Ids.drawThemeListFollowSystem),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );
@@ -51,6 +52,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(
               AppConstant.navigatorKey.currentContext, Ids.drawThemeListDark),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );
@@ -60,6 +62,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(
               AppConstant.navigatorKey.currentContext, Ids.drawThemeListLight),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );

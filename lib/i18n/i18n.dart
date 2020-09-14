@@ -38,6 +38,8 @@ class Ids {
   static final String drawPublish = 'drawPublish';
   static final String drawPublishDetail = 'drawPublishDetail';
   static final String drawAppInfo = 'drawAppInfo';
+  static final String drawVersionMobile = 'drawVersionMobile';
+  static final String drawVersionServer = 'drawVersionServer';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
@@ -89,6 +91,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeListFollowSystem: 'Follow System',
       Ids.drawThemeListDark: 'Dark',
       Ids.drawThemeListLight: 'Light',
+      Ids.drawVersionServer: 'Server:',
+      Ids.drawVersionMobile: 'Mobile:',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
@@ -135,7 +139,9 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeMode: '主题',
       Ids.drawThemeListFollowSystem: '跟随系统',
       Ids.drawThemeListDark: '暗黑模式',
-      Ids.drawThemeListLight: '正常模式',
+      Ids.drawThemeListLight: '日间模式',
+      Ids.drawVersionServer: '服务器:',
+      Ids.drawVersionMobile: '客户端:',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',
