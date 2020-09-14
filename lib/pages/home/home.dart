@@ -4,6 +4,8 @@ import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/notification.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
+import 'package:winwin_hexo_editor_mobile/helper/DateUtils.dart';
+import 'package:winwin_hexo_editor_mobile/helper/WidgetList.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_drawer.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:toast/toast.dart';
 import 'package:fluintl/fluintl.dart';
+import 'package:fsuper/fsuper.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -122,7 +125,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         ),
       ),
       child: ListTile(
-        isThreeLine: true,
         leading: item.published
             ? Icon(
                 Icons.assignment_turned_in,
@@ -132,14 +134,88 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                 Icons.assignment_returned,
                 color: Colors.orange,
               ),
-        title: new Text(item.title),
-        subtitle: item.categories == null
-            ? SizedBox()
-            : Text(
-                item.categories,
-                maxLines: 2,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              DateUtils.instance
+                  .getFormartData(item.date * 1000, "yyyy年MM月dd hh:mm:ss"),
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 9.0,
+                color: Colors.grey,
               ),
-        trailing: new Icon(Icons.keyboard_arrow_right),
+            ),
+            Text(
+              item.title,
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            )
+          ],
+        ),
+        subtitle: Row(
+          children: [
+            item.categories == null
+                ? Text(
+                    IntlUtil.getString(
+                        context, Ids.homePageListCategoriesEmpty),
+                    maxLines: 1,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.grey[300],
+                    ),
+                  )
+                : FSuper(
+                    text: item.categories,
+                    style: TextStyle(color: Colors.white, fontSize: 10),
+                    child1Alignment: Alignment.center,
+                    backgroundColor: Colors.blue[100],
+                    padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                    corner: FCorner(
+                        rightTopCorner: 20,
+                        rightBottomCorner: 20,
+                        leftBottomCorner: 20,
+                        leftTopCorner: 20),
+                  ),
+            Spacer(),
+            Row(
+              children: WidgetList.foreachToWidget(item.tags, (element) {
+                return FSuper(
+                  margin: EdgeInsets.only(left: 4.0),
+                  text: element,
+                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  child1Alignment: Alignment.center,
+                  backgroundColor: Colors.red[100],
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  corner: FCorner(
+                      rightTopCorner: 20,
+                      rightBottomCorner: 20,
+                      leftBottomCorner: 20,
+                      leftTopCorner: 20),
+                );
+              }, () {
+                return Text(
+                  IntlUtil.getString(context, Ids.homePageListTagsEmpty),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.grey[300],
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
           Navigator.pushNamed(context, Routing.postDetailPage + item.sId);
         },

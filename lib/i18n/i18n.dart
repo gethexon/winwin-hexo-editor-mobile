@@ -19,6 +19,9 @@ class Ids {
   static final String homePagePublish = 'homePagePublish';
   static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
   static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
+  static final String homePageListCategoriesEmpty =
+      'homePageListCategoriesEmpty';
+  static final String homePageListTagsEmpty = 'homePageListTagsEmpty';
   static final String commonNetworkError = 'commonNextWorkError';
   static final String notificationPermissionsRequest =
       'notificationPermissionsRequest';
@@ -72,6 +75,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: 'Publish',
       Ids.homePageToastCleanSuccess: 'Clean Success',
       Ids.homePageToastDeploySuccess: 'Deploy Success',
+      Ids.homePageListCategoriesEmpty: 'No Categories',
+      Ids.homePageListTagsEmpty: 'No Tags',
       Ids.commonNetworkError: 'Network Error',
       Ids.notificationPermissionsRequest:
           'We want to let you know when deploy success, so we need to get notification permission.',
@@ -122,6 +127,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: '发布',
       Ids.homePageToastCleanSuccess: '清理成功',
       Ids.homePageToastDeploySuccess: '发布成功',
+      Ids.homePageListCategoriesEmpty: '无分类',
+      Ids.homePageListTagsEmpty: '无标签',
       Ids.commonNetworkError: '网络请求错误',
       Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
