@@ -164,28 +164,35 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         ),
         subtitle: Row(
           children: [
-            item.categories == null
-                ? Text(
-                    IntlUtil.getString(
-                        context, Ids.homePageListCategoriesEmpty),
-                    maxLines: 1,
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.grey[300],
-                    ),
-                  )
-                : FSuper(
-                    text: item.categories,
-                    style: TextStyle(color: Colors.white, fontSize: 10),
-                    child1Alignment: Alignment.center,
-                    backgroundColor: Colors.blue[100],
-                    padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
-                    corner: FCorner(
-                        rightTopCorner: 20,
-                        rightBottomCorner: 20,
-                        leftBottomCorner: 20,
-                        leftTopCorner: 20),
+            Row(
+              children: WidgetList.foreachToWidget(item.categories, (element) {
+                return FSuper(
+                  margin: EdgeInsets.only(left: 4.0),
+                  text: element,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
                   ),
+                  child1Alignment: Alignment.center,
+                  backgroundColor: Colors.blue[100],
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  corner: FCorner(
+                      rightTopCorner: 20,
+                      rightBottomCorner: 20,
+                      leftBottomCorner: 20,
+                      leftTopCorner: 20),
+                );
+              }, () {
+                return Text(
+                  IntlUtil.getString(context, Ids.homePageListCategoriesEmpty),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.grey[300],
+                  ),
+                );
+              }),
+            ),
             Spacer(),
             Row(
               children: WidgetList.foreachToWidget(item.tags, (element) {
