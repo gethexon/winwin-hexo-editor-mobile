@@ -19,6 +19,9 @@ class Ids {
   static final String homePagePublish = 'homePagePublish';
   static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
   static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
+  static final String homePageListCategoriesEmpty =
+      'homePageListCategoriesEmpty';
+  static final String homePageListTagsEmpty = 'homePageListTagsEmpty';
   static final String commonNetworkError = 'commonNextWorkError';
   static final String notificationPermissionsRequest =
       'notificationPermissionsRequest';
@@ -38,6 +41,8 @@ class Ids {
   static final String drawPublish = 'drawPublish';
   static final String drawPublishDetail = 'drawPublishDetail';
   static final String drawAppInfo = 'drawAppInfo';
+  static final String drawVersionMobile = 'drawVersionMobile';
+  static final String drawVersionServer = 'drawVersionServer';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
@@ -70,6 +75,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: 'Publish',
       Ids.homePageToastCleanSuccess: 'Clean Success',
       Ids.homePageToastDeploySuccess: 'Deploy Success',
+      Ids.homePageListCategoriesEmpty: 'No Categories',
+      Ids.homePageListTagsEmpty: 'No Tags',
       Ids.commonNetworkError: 'Network Error',
       Ids.notificationPermissionsRequest:
           'We want to let you know when deploy success, so we need to get notification permission.',
@@ -89,6 +96,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeListFollowSystem: 'Follow System',
       Ids.drawThemeListDark: 'Dark',
       Ids.drawThemeListLight: 'Light',
+      Ids.drawVersionServer: 'Server:',
+      Ids.drawVersionMobile: 'Mobile:',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
@@ -118,6 +127,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: '发布',
       Ids.homePageToastCleanSuccess: '清理成功',
       Ids.homePageToastDeploySuccess: '发布成功',
+      Ids.homePageListCategoriesEmpty: '无分类',
+      Ids.homePageListTagsEmpty: '无标签',
       Ids.commonNetworkError: '网络请求错误',
       Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
@@ -135,7 +146,9 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeMode: '主题',
       Ids.drawThemeListFollowSystem: '跟随系统',
       Ids.drawThemeListDark: '暗黑模式',
-      Ids.drawThemeListLight: '正常模式',
+      Ids.drawThemeListLight: '日间模式',
+      Ids.drawVersionServer: '服务器:',
+      Ids.drawVersionMobile: '客户端:',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',

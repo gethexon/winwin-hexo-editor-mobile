@@ -67,6 +67,23 @@ class BaseApi {
     return returnValue;
   }
 
+  Future<dynamic> getRequestWithoutAuth(
+      String url, Map<String, dynamic> parameters) async {
+    if (prefs == null) {
+      prefs = await SharedPreferences.getInstance();
+    }
+    var server = prefs.getString(AppConstant.appAdminServerAddrss);
+    var returnValue;
+    try {
+      Response response =
+          await dio.get(server + url, queryParameters: parameters);
+      returnValue = response.data;
+    } on DioError catch (onError) {
+      returnValue = onError.response.data;
+    }
+    return returnValue;
+  }
+
   Future<dynamic> postRequestWithAuth(
       String url, Map<String, dynamic> parameters,
       {String qrToken}) async {
