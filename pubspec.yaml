@@ -41,7 +41,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_launcher_icons: ^0.7.4
+  flutter_launcher_icons: ^0.8.0
   flutter_rename_app: ^1.0.0
 
 flutter_rename_app:
@@ -53,10 +53,8 @@ flutter_rename_app:
 
 flutter_icons:
   image_path: "assets/images/icon.png"
-  android: true
+  android: "launcher_icon"
   ios: true
-  adaptive_icon_background: "assets/images/icon-bg.png"
-  adaptive_icon_foreground: "assets/images/icon-fg.png"
 
 flutter:
   uses-material-design: true
