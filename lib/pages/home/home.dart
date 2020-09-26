@@ -165,7 +165,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         subtitle: Row(
           children: [
             Row(
-              children: WidgetList.foreachToWidget(item.categories, (element) {
+              children:
+                  WidgetList.foreachMatrixToWidget(item.categories, (element) {
                 return FSuper(
                   margin: EdgeInsets.only(left: 4.0),
                   text: element,

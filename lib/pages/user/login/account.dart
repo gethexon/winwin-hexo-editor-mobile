@@ -20,6 +20,9 @@ class _AccountPageViewState extends State<AccountPageView>
   TextEditingController nameEditingController;
   TextEditingController passwordEditingController;
   SharedPreferences prefs;
+  final FocusNode _serverEditingControllerFocus = FocusNode();
+  final FocusNode _nameEditingControllerFocus = FocusNode();
+  final FocusNode _passwordEditingControllerFocus = FocusNode();
 
   @override
   void initState() {
@@ -38,10 +41,21 @@ class _AccountPageViewState extends State<AccountPageView>
         prefs.getString(AppConstant.appAdminServerUserName);
   }
 
+  _fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
+    currentFocus.unfocus();
+    FocusScope.of(context).requestFocus(nextFocus);
+  }
+
   void onLoginButtonClick() async {
+    FocusScope.of(context).requestFocus(FocusNode());
     var server = serverEditingController.text.trim();
     var name = nameEditingController.text.trim();
     var password = passwordEditingController.text.trim();
+    if (server.endsWith('/')) {
+      server = server.substring(0, server.length - 1);
+      serverEditingController.text = server;
+    }
     if (server.isEmpty) {
       Toast.show(
           IntlUtil.getString(context, Ids.loginPageServerEmptyError), context,
@@ -62,11 +76,11 @@ class _AccountPageViewState extends State<AccountPageView>
     }
     var pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
     pr.style(message: IntlUtil.getString(context, Ids.loadingAlertText));
-    pr.show();
+    await pr.show();
     prefs.setString(AppConstant.appAdminServerAddrss, server);
     prefs.setString(AppConstant.appAdminServerUserName, name);
-    UserApi.login(name, password).then((responseValue) {
-      pr.hide();
+    UserApi.login(name, password).then((responseValue) async {
+      await pr.hide();
       if (responseValue['success'] == true) {
         var userId = responseValue['data']['id'];
         prefs.setString(AppConstant.appAdminUserId, userId);
@@ -79,8 +93,8 @@ class _AccountPageViewState extends State<AccountPageView>
         Toast.show(responseValue['message'], context,
             duration: Toast.LENGTH_LONG);
       }
-    }).catchError((onError) {
-      pr.hide();
+    }).catchError((onError) async {
+      await pr.hide();
       Toast.show(IntlUtil.getString(context, Ids.commonNetworkError), context,
           duration: Toast.LENGTH_LONG);
     });
@@ -103,6 +117,9 @@ class _AccountPageViewState extends State<AccountPageView>
           TextField(
             controller: serverEditingController,
             obscureText: false,
+            focusNode: _serverEditingControllerFocus,
+            onSubmitted: (_) => _fieldFocusChange(context,
+                _serverEditingControllerFocus, _nameEditingControllerFocus),
             textInputAction: TextInputAction.next,
             style: TextStyle(
               fontSize: 16,
@@ -115,6 +132,12 @@ class _AccountPageViewState extends State<AccountPageView>
           TextField(
             controller: nameEditingController,
             obscureText: false,
+            focusNode: _nameEditingControllerFocus,
+            onSubmitted: (_) => _fieldFocusChange(
+              context,
+              _nameEditingControllerFocus,
+              _passwordEditingControllerFocus,
+            ),
             textInputAction: TextInputAction.next,
             style: TextStyle(
               fontSize: 16,
@@ -127,6 +150,11 @@ class _AccountPageViewState extends State<AccountPageView>
           TextField(
             controller: passwordEditingController,
             obscureText: true,
+            focusNode: _passwordEditingControllerFocus,
+            onSubmitted: (_) {
+              _passwordEditingControllerFocus.unfocus();
+              onLoginButtonClick();
+            },
             textInputAction: TextInputAction.done,
             style: TextStyle(
               fontSize: 16,

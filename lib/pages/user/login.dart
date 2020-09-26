@@ -30,31 +30,39 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView(
-                children: [
-                  ScanQRcodePageView(),
-                  AccountPageView(),
-                ],
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () async {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  onPageChanged: (value) =>
+                      FocusScope.of(context).requestFocus(FocusNode()),
+                  children: [
+                    ScanQRcodePageView(),
+                    AccountPageView(),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            FlatButton(
-              child: Text(
-                IntlUtil.getString(context, Ids.loginPageGithubButton),
-                style: TextStyle(color: Colors.green, fontSize: 12.0),
+              SizedBox(
+                height: 20.0,
               ),
-              onPressed: onWinwinGithubButtonClick,
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-          ],
+              FlatButton(
+                child: Text(
+                  IntlUtil.getString(context, Ids.loginPageGithubButton),
+                  style: TextStyle(color: Colors.green, fontSize: 12.0),
+                ),
+                onPressed: onWinwinGithubButtonClick,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
