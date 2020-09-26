@@ -59,8 +59,8 @@ flutter_icons:
 flutter:
   uses-material-design: true
 
-  # assets:
-  #  - images/a_dot_burr.jpeg
+  assets:
+   - assets/images/
   #  - images/a_dot_ham.jpeg
 
   # fonts:

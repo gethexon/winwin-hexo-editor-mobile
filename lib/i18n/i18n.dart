@@ -4,8 +4,10 @@ class Ids {
   static final String loginPageUserHint = 'loginPage_userHint';
   static final String loginPagePasswordHint = 'loginPage_passwordHint';
   static final String loginPageScanQrCodeButton = 'loginPageScanQrCodeButton';
+  static final String loginPageLoginButton = 'loginPageLoginButton';
   static final String loginPageGithubButton = 'loginPageGithubButton';
-  static final String loginPageWelcomBack = 'loginPageWelcomBack';
+  static final String loginPageSwipeLeft = 'loginPageSwipeLeft';
+  static final String loginPageSwipeRight = 'loginPageSwipeRight';
   static final String loginPageServerEmptyError = 'loginPageServerEmptyError';
   static final String loginPageUserEmptyError = 'loginPageUserEmptyError';
   static final String loginPagePasswordEmptyError =
@@ -61,8 +63,10 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageUserHint: 'Your winwin user name (default: admin)',
       Ids.loginPagePasswordHint: 'Your winwin password (default: admin)',
       Ids.loginPageScanQrCodeButton: 'Scan QR code',
+      Ids.loginPageLoginButton: 'Login',
       Ids.loginPageGithubButton: 'About winwin Hexo editor',
-      Ids.loginPageWelcomBack: 'Welcome\nBack',
+      Ids.loginPageSwipeLeft: 'Swipe Left to change another way',
+      Ids.loginPageSwipeRight: 'Swipe Right to change another way',
       Ids.loginPagePasswordEmptyError: 'You need to input a password',
       Ids.loginPageUserEmptyError: 'You need to input a name',
       Ids.loginPageServerEmptyError: 'You need to input a server address',
@@ -113,7 +117,9 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageUserHint: '您的winwin登录名（默认admin)',
       Ids.loginPagePasswordHint: '您的winwin密码（默认admin)',
       Ids.loginPageScanQrCodeButton: '扫描二维码',
-      Ids.loginPageWelcomBack: '欢迎\n  回来',
+      Ids.loginPageLoginButton: '登录',
+      Ids.loginPageSwipeLeft: '向左滑动换一种方式登录',
+      Ids.loginPageSwipeRight: '向右滑动换一种方式登录',
       Ids.loginPagePasswordEmptyError: '请输入密码',
       Ids.loginPageUserEmptyError: '请输入登录名',
       Ids.loginPageServerEmptyError: '请输入服务器地址',
