@@ -24,6 +24,7 @@ class Ids {
   static final String homePageListCategoriesEmpty =
       'homePageListCategoriesEmpty';
   static final String homePageListTagsEmpty = 'homePageListTagsEmpty';
+  static final String homeDateTemplateString = 'homeDateTemplateString';
   static final String commonNetworkError = 'commonNextWorkError';
   static final String notificationPermissionsRequest =
       'notificationPermissionsRequest';
@@ -52,6 +53,8 @@ class Ids {
       'newPostPageSaveDialogContext';
   static final String detailPostPageErrorLunchWeb =
       'detailPostPageErrorLunchWeb';
+  static final String detailTags = 'detailTags';
+  static final String detailCategories = 'detailCategories';
   static final String aboutPageTitle = 'aboutPageTitle';
 }
 
@@ -81,6 +84,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageToastDeploySuccess: 'Deploy Success',
       Ids.homePageListCategoriesEmpty: 'No Categories',
       Ids.homePageListTagsEmpty: 'No Tags',
+      Ids.homeDateTemplateString: null, //set to null will be using the default
       Ids.commonNetworkError: 'Network Error',
       Ids.notificationPermissionsRequest:
           'We want to let you know when deploy success, so we need to get notification permission.',
@@ -107,6 +111,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogTitle: 'Save',
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
+      Ids.detailTags: 'Tags: ',
+      Ids.detailCategories: 'Categories: ',
       Ids.aboutPageTitle: 'About',
     }
   },
@@ -135,6 +141,7 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePageToastDeploySuccess: '发布成功',
       Ids.homePageListCategoriesEmpty: '无分类',
       Ids.homePageListTagsEmpty: '无标签',
+      Ids.homeDateTemplateString: 'yyyy年MM月dd hh:mm:ss',
       Ids.commonNetworkError: '网络请求错误',
       Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
@@ -160,6 +167,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogTitle: '保存',
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
+      Ids.detailTags: '标签: ',
+      Ids.detailCategories: '分类: ',
       Ids.aboutPageTitle: '关于我们',
     },
   }

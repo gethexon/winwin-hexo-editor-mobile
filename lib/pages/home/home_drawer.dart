@@ -9,6 +9,7 @@ import 'package:toast/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/info_api.dart';
+import 'package:winwin_hexo_editor_mobile/api/user_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
@@ -37,19 +38,22 @@ class _HomeDrawerState extends State<HomeDrawer>
   @override
   void afterFirstLayout(BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    var prefs = await SharedPreferences.getInstance();
-    // _name = prefs.getString(AppConstant.appAdminUserId);
-
     setState(() {
       _selectedThemeValue =
           Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
       _versionMobile = packageInfo.version;
     });
-
     InfoApi.version().then((responseValue) {
       setState(() {
         _versionServer = responseValue;
       });
+    });
+    UserApi.getUserInfo().then((responseValue) {
+      if (responseValue['success']) {
+        setState(() {
+          _name = responseValue['data']['user']['username'];
+        });
+      }
     });
   }
 

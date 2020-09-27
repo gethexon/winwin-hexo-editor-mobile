@@ -15,4 +15,9 @@ class UserApi {
     String url = AppApiAddress.registeDevice;
     return await BaseApi().postRequestWithAuth(url, parameters, qrToken: token);
   }
+
+  static Future<dynamic> getUserInfo() async {
+    String url = AppApiAddress.userInfo;
+    return await BaseApi().getRequestWithAuth(url, null);
+  }
 }

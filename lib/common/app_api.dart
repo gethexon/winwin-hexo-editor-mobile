@@ -3,6 +3,7 @@ class AppApiAddress {
   static const String refreshToken = '/auth/refresh';
   static const String registeDevice = '/auth/apikey';
 
+  static const String userInfo = '/settings/user';
   static const String serverVersion = '/info/version';
 
   static const String posts = '/hexoeditorserver/posts';

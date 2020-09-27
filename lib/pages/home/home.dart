@@ -138,8 +138,10 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              DateUtils.instance
-                  .getFormartData(item.date * 1000, "yyyy年MM月dd hh:mm:ss"),
+              DateUtils.instance.getFormartData(
+                item.date * 1000,
+                IntlUtil.getString(context, Ids.homeDateTemplateString),
+              ),
               maxLines: 1,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
