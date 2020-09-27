@@ -123,7 +123,10 @@ class _PostDetailPageState extends State<PostDetailPage>
                       return FSuper(
                         margin: EdgeInsets.only(left: 4.0),
                         text: element,
-                        style: TextStyle(color: Colors.black, fontSize: 10),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 10,
+                        ),
                         child1Alignment: Alignment.center,
                         backgroundColor: Colors.red[100],
                         padding: EdgeInsets.fromLTRB(6, 3, 6, 3),

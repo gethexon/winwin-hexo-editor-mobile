@@ -29,8 +29,11 @@ class Ids {
   static final String notificationPermissionsRequest =
       'notificationPermissionsRequest';
   static final String delete = 'delete';
+  static final String categories = 'categories';
+  static final String tags = 'tags';
   static final String yes = 'Yes';
   static final String no = 'No';
+  static final String cancel = 'cancel';
   static final String never = 'never';
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
@@ -46,11 +49,16 @@ class Ids {
   static final String drawAppInfo = 'drawAppInfo';
   static final String drawVersionMobile = 'drawVersionMobile';
   static final String drawVersionServer = 'drawVersionServer';
+  static final String newPostPageAdd = 'newPostPageAdd';
+  static final String newPostPageEditorHolder = 'newPostPageEditorHolder';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
   static final String newPostPageSaveDialogContext =
       'newPostPageSaveDialogContext';
+  static final String selectTagsPageEmptyErrorMessage =
+      'selectTagsPageEmptyErrorMessage';
+  static final String selectTagsPageInputHolder = 'selectTagsPageInputHolder';
   static final String detailPostPageErrorLunchWeb =
       'detailPostPageErrorLunchWeb';
   static final String detailTags = 'detailTags';
@@ -90,8 +98,11 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
           'We want to let you know when deploy success, so we need to get notification permission.',
       Ids.yes: 'Yes',
       Ids.no: 'No',
+      Ids.cancel: 'Cancel',
       Ids.never: 'Never',
       Ids.delete: 'Delete',
+      Ids.tags: 'Tags',
+      Ids.categories: 'Categories',
       Ids.loading: 'Loading',
       Ids.drawExit: 'Logout',
       Ids.drawClean: 'Clean',
@@ -106,10 +117,14 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeListLight: 'Light',
       Ids.drawVersionServer: 'Server:',
       Ids.drawVersionMobile: 'Mobile:',
+      Ids.newPostPageAdd: 'Add',
+      Ids.newPostPageEditorHolder: 'Start your show',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
+      Ids.selectTagsPageEmptyErrorMessage: 'Please input a tag name',
+      Ids.selectTagsPageInputHolder: 'Input a tag name',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
       Ids.detailTags: 'Tags: ',
       Ids.detailCategories: 'Categories: ',
@@ -131,6 +146,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageServerEmptyError: '请输入服务器地址',
       Ids.loginPageGithubButton: '关于 winwin Hexo editor',
       Ids.loadingAlertText: '请求中...',
+      Ids.newPostPageAdd: '增加',
+      Ids.newPostPageEditorHolder: '请开始您的表演~',
       Ids.homePageListEmptyText: '空的呢~',
       Ids.homePageAlertDeleteText: '确定删除吗?',
       Ids.homePageAlertPublishText: '发布吗?',
@@ -146,8 +163,11 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
       Ids.no: '不',
+      Ids.cancel: '取消',
       Ids.never: '永不',
       Ids.delete: '删除',
+      Ids.tags: '标签',
+      Ids.categories: '分类',
       Ids.loading: '载入中',
       Ids.drawExit: '退出登录',
       Ids.drawClean: '清除Hexo数据',
@@ -166,6 +186,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
+      Ids.selectTagsPageEmptyErrorMessage: '标签不可为空',
+      Ids.selectTagsPageInputHolder: '请输入标签',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
       Ids.detailTags: '标签: ',
       Ids.detailCategories: '分类: ',

@@ -11,6 +11,8 @@ class AppApiAddress {
   static const String postPublish = '/hexoeditorserver/post/{id}/publish';
   static const String postUnpublish = '/hexoeditorserver/post/{id}/unpublish';
 
+  static const String tags = '/hexoeditorserver/tags';
+
   static const String reloadBlog = '/hexoeditorserver/reload';
   static const String deployBlog = '/hexoeditorserver/deploy';
   static const String cleanHexo = '/hexoeditorserver/clean';
