@@ -4,7 +4,7 @@ import 'package:toast/toast.dart';
 import 'package:winwin_hexo_editor_mobile/api/categories_api.dart';
 import 'package:winwin_hexo_editor_mobile/entity/category.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
-import 'package:winwin_hexo_editor_mobile/pages/post_detail/category_arguments.dart';
+import 'package:winwin_hexo_editor_mobile/pages/new/category_arguments.dart';
 
 class SelectCategoryPage extends StatefulWidget {
   @override

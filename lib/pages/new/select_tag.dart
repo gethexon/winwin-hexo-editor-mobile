@@ -4,7 +4,7 @@ import 'package:toast/toast.dart';
 import 'package:winwin_hexo_editor_mobile/api/tags_api.dart';
 import 'package:winwin_hexo_editor_mobile/entity/tag.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
-import 'package:winwin_hexo_editor_mobile/pages/post_detail/tag_arguments.dart';
+import 'package:winwin_hexo_editor_mobile/pages/new/tag_arguments.dart';
 
 class SelectTagPage extends StatefulWidget {
   @override
