@@ -59,6 +59,10 @@ class Ids {
   static final String selectTagsPageEmptyErrorMessage =
       'selectTagsPageEmptyErrorMessage';
   static final String selectTagsPageInputHolder = 'selectTagsPageInputHolder';
+  static final String selectCategoriesPageEmptyErrorMessage =
+      'selectCategoriesPageEmptyErrorMessage';
+  static final String selectCategoriesPageInputHolder =
+      'selectCategoriesPageInputHolder';
   static final String detailPostPageErrorLunchWeb =
       'detailPostPageErrorLunchWeb';
   static final String detailTags = 'detailTags';
@@ -125,6 +129,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
       Ids.selectTagsPageEmptyErrorMessage: 'Please input a tag name',
       Ids.selectTagsPageInputHolder: 'Input a tag name',
+      Ids.selectCategoriesPageEmptyErrorMessage: 'Please input a category name',
+      Ids.selectCategoriesPageInputHolder: 'Input a category name',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
       Ids.detailTags: 'Tags: ',
       Ids.detailCategories: 'Categories: ',
@@ -188,6 +194,8 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
       Ids.selectTagsPageEmptyErrorMessage: '标签不可为空',
       Ids.selectTagsPageInputHolder: '请输入标签',
+      Ids.selectCategoriesPageEmptyErrorMessage: '分类不可为空',
+      Ids.selectCategoriesPageInputHolder: '请输入分类',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
       Ids.detailTags: '标签: ',
       Ids.detailCategories: '分类: ',

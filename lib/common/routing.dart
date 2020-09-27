@@ -4,6 +4,7 @@ import 'package:winwin_hexo_editor_mobile/pages/home/home.dart';
 import 'package:winwin_hexo_editor_mobile/pages/loading.dart';
 import 'package:winwin_hexo_editor_mobile/pages/new/new.dart';
 import 'package:winwin_hexo_editor_mobile/pages/post_detail/post_detail.dart';
+import 'package:winwin_hexo_editor_mobile/pages/post_detail/select_category.dart';
 import 'package:winwin_hexo_editor_mobile/pages/post_detail/select_tag.dart';
 import 'package:winwin_hexo_editor_mobile/pages/user/login.dart';
 
@@ -15,6 +16,7 @@ class Routing {
   static final String aboutAppPage = '/about_app';
   static final String postDetailPage = '/detail_post/';
   static final String tagsPage = '/select_tag';
+  static final String categoryPage = '/select_categorie';
 
   static final Map<String, WidgetBuilder> routes = {
     loadingPage: (context) => LoadingPage(),
@@ -23,6 +25,7 @@ class Routing {
     aboutAppPage: (context) => AboutPage(),
     newPostPage: (context) => NewPostPage(),
     tagsPage: (context) => SelectTagPage(),
+    categoryPage: (context) => SelectCategoryPage(),
   };
 
   static final RouteFactory generateRoute = (routing) {

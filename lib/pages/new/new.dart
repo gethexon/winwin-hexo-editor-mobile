@@ -3,8 +3,10 @@ import 'package:after_layout/after_layout.dart';
 import 'package:fsuper/fsuper.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
+import 'package:winwin_hexo_editor_mobile/entity/category.dart';
 import 'package:winwin_hexo_editor_mobile/entity/tag.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
+import 'package:winwin_hexo_editor_mobile/pages/post_detail/category_arguments.dart';
 import 'package:winwin_hexo_editor_mobile/pages/post_detail/tag_arguments.dart';
 import 'package:zefyr/zefyr.dart';
 import 'package:quill_delta/quill_delta.dart';
@@ -23,7 +25,7 @@ class _NewPostPageState extends State<NewPostPage>
   FocusNode _focusNode;
   String _titleString = '';
   bool isInputAnything = false;
-  List<List<String>> _categories;
+  List<Category> _categories;
   List<Tag> _tags;
 
   @override
@@ -32,8 +34,7 @@ class _NewPostPageState extends State<NewPostPage>
     final document = _loadDocument();
     _controller = ZefyrController(document);
     _focusNode = FocusNode();
-    _categories = List<List<String>>();
-    _categories.add(List<String>());
+    _categories = List<Category>();
     _tags = List<Tag>();
     _controller.addListener(() {
       if (_controller.document.toPlainText().trim().isEmpty) {
@@ -154,14 +155,22 @@ class _NewPostPageState extends State<NewPostPage>
   }
 
   _addCategories() {
-    setState(() {
-      _categories[0].add("aaa");
+    Navigator.pushNamed(
+      context,
+      Routing.categoryPage,
+      arguments: CategoryArguments(_categories),
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _categories.add(value);
+        });
+      }
     });
   }
 
-  _deleteCategories() {
+  _deleteCategories(Category category) {
     setState(() {
-      _categories[0].add("bbb");
+      _categories.remove(category);
     });
   }
 
@@ -223,13 +232,13 @@ class _NewPostPageState extends State<NewPostPage>
                     child: Container(
                       height: 26,
                       child: ListView.builder(
-                        itemCount: _categories[0].length,
+                        itemCount: _categories.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                             child: FSuper(
-                              text: _categories[0][index],
+                              text: _categories[index].name,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
@@ -245,7 +254,8 @@ class _NewPostPageState extends State<NewPostPage>
                               ),
                               child1Alignment: Alignment.centerRight,
                               child1Margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
-                              onChild1Click: () => _deleteCategories(),
+                              onChild1Click: () =>
+                                  _deleteCategories(_categories[index]),
                             ),
                           );
                         },
