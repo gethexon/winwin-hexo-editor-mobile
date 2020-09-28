@@ -1,43 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:fluintl/fluintl.dart';
-import 'package:after_layout/after_layout.dart';
-import 'package:winwin_hexo_editor_mobile/api/user_api.dart';
-import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
-import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
-import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toast/toast.dart';
-import 'package:progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:winwin_hexo_editor_mobile/pages/user/login/qrcode.dart';
+
+import 'login/account.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>
-    with AfterLayoutMixin<LoginPage> {
-  TextEditingController serverEditingController;
-  TextEditingController nameEditingController;
-  TextEditingController passwordEditingController;
-  SharedPreferences prefs;
-
+class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    serverEditingController = TextEditingController();
-    nameEditingController = TextEditingController();
-    passwordEditingController = TextEditingController();
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) async {
-    prefs = await SharedPreferences.getInstance();
-    serverEditingController.text =
-        prefs.getString(AppConstant.appAdminServerAddrss);
-    nameEditingController.text =
-        prefs.getString(AppConstant.appAdminServerUserName);
   }
 
   void onWinwinGithubButtonClick() async {
@@ -49,132 +26,42 @@ class _LoginPageState extends State<LoginPage>
     }
   }
 
-  void onLoginButtonClick() async {
-    var server = serverEditingController.text.trim();
-    var name = nameEditingController.text.trim();
-    var password = passwordEditingController.text.trim();
-    if (server.isEmpty) {
-      Toast.show(
-          IntlUtil.getString(context, Ids.loginPageServerEmptyError), context,
-          duration: Toast.LENGTH_LONG);
-      return;
-    }
-    if (name.isEmpty) {
-      Toast.show(
-          IntlUtil.getString(context, Ids.loginPageUserEmptyError), context,
-          duration: Toast.LENGTH_LONG);
-      return;
-    }
-    if (password.isEmpty) {
-      Toast.show(
-          IntlUtil.getString(context, Ids.loginPagePasswordEmptyError), context,
-          duration: Toast.LENGTH_LONG);
-      return;
-    }
-    var pr = new ProgressDialog(context, type: ProgressDialogType.Normal);
-    pr.style(message: IntlUtil.getString(context, Ids.loadingAlertText));
-    pr.show();
-    prefs.setString(AppConstant.appAdminServerAddrss, server);
-    prefs.setString(AppConstant.appAdminServerUserName, name);
-    UserApi.login(name, password).then((responseValue) {
-      pr.hide();
-      if (responseValue['success'] == true) {
-        var userId = responseValue['data']['id'];
-        prefs.setString(AppConstant.appAdminUserId, userId);
-        var token = responseValue['data']['token'];
-        prefs.setString(AppConstant.appAdminUserToken, token);
-        var refreshToken = responseValue['data']['refreshToken'];
-        prefs.setString(AppConstant.appAdminRefreshToken, refreshToken);
-        Navigator.popAndPushNamed(context, Routing.homePage);
-      } else {
-        Toast.show(responseValue['message'], context,
-            duration: Toast.LENGTH_LONG);
-      }
-    }).catchError((onError) {
-      pr.hide();
-      Toast.show(IntlUtil.getString(context, Ids.commonNetworkError), context,
-          duration: Toast.LENGTH_LONG);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null,
-      body: WaveBackground(
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () async {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      IntlUtil.getString(context, Ids.loginPageWelcomBack),
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: 36.0,
-                      ),
-                    ),
-                  ),
+          child: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  onPageChanged: (value) =>
+                      FocusScope.of(context).requestFocus(FocusNode()),
+                  children: [
+                    ScanQRcodePageView(),
+                    AccountPageView(),
+                  ],
                 ),
-                TextField(
-                  controller: serverEditingController,
-                  obscureText: false,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText:
-                        IntlUtil.getString(context, Ids.loginPageServerHint),
-                  ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              FlatButton(
+                child: Text(
+                  IntlUtil.getString(context, Ids.loginPageGithubButton),
+                  style: TextStyle(color: Colors.green, fontSize: 12.0),
                 ),
-                TextField(
-                  controller: nameEditingController,
-                  obscureText: false,
-                  textInputAction: TextInputAction.next,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText:
-                        IntlUtil.getString(context, Ids.loginPageUserHint),
-                  ),
-                ),
-                TextField(
-                  controller: passwordEditingController,
-                  obscureText: true,
-                  textInputAction: TextInputAction.done,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText:
-                        IntlUtil.getString(context, Ids.loginPagePasswordHint),
-                  ),
-                ),
-                FlatButton(
-                  child: Text(
-                    IntlUtil.getString(context, Ids.loginPageLoginButton),
-                  ),
-                  onPressed: onLoginButtonClick,
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                FlatButton(
-                  child: Text(
-                    IntlUtil.getString(context, Ids.loginPageGithubButton),
-                    style: TextStyle(color: Colors.green, fontSize: 12.0),
-                  ),
-                  onPressed: onWinwinGithubButtonClick,
-                ),
-              ],
-            ),
+                onPressed: onWinwinGithubButtonClick,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+            ],
           ),
         ),
       ),

@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:after_layout/after_layout.dart';
-import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:winwin_hexo_editor_mobile/api/blog_api.dart';
 import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
-import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 import 'package:winwin_hexo_editor_mobile/common/notification.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/post_item.dart';
+import 'package:winwin_hexo_editor_mobile/helper/DateUtils.dart';
+import 'package:winwin_hexo_editor_mobile/helper/WidgetList.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
+import 'package:winwin_hexo_editor_mobile/pages/home/home_drawer.dart';
 import 'package:winwin_hexo_editor_mobile/pages/home/home_helper.dart';
-import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
-import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
-import 'package:winwin_hexo_editor_mobile/widget/wave_backgroud.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_easyrefresh/material_header.dart';
 import 'package:flutter_easyrefresh/material_footer.dart';
 import 'package:toast/toast.dart';
 import 'package:fluintl/fluintl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:package_info/package_info.dart';
-import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:fsuper/fsuper.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -32,9 +26,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   EasyRefreshController _refreshController = EasyRefreshController();
   GlobalKey _scaffoldKey;
   HomeHelper _homeHelper = HomeHelper();
-  String _version = '';
-  String _name = '';
-  AppThemeMode _selectedThemeValue;
 
   @override
   void initState() {
@@ -44,14 +35,7 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   }
 
   @override
-  void afterFirstLayout(BuildContext context) async {
-    _selectedThemeValue =
-        Provider.of<ThemeNotifier>(context, listen: false).getAppThemeMode();
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    _version = packageInfo.version;
-    var prefs = await SharedPreferences.getInstance();
-    _name = prefs.getString(AppConstant.appAdminUserId);
-  }
+  void afterFirstLayout(BuildContext context) async {}
 
   _itemBuilder(List dataList, BuildContext context, int index) {
     PostItem item = dataList[index];
@@ -141,7 +125,6 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         ),
       ),
       child: ListTile(
-        isThreeLine: true,
         leading: item.published
             ? Icon(
                 Icons.assignment_turned_in,
@@ -151,12 +134,100 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
                 Icons.assignment_returned,
                 color: Colors.orange,
               ),
-        title: new Text(item.title),
-        subtitle: Text(
-          item.sContent,
-          maxLines: 2,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            item.date != null
+                ? Text(
+                    DateUtils.instance.getFormartData(
+                      item.date * 1000,
+                      IntlUtil.getString(context, Ids.homeDateTemplateString),
+                    ),
+                    maxLines: 1,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 9.0,
+                      color: Colors.grey,
+                    ),
+                  )
+                : SizedBox(),
+            Text(
+              item.title,
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
+            SizedBox(
+              height: 4,
+            )
+          ],
         ),
-        trailing: new Icon(Icons.keyboard_arrow_right),
+        subtitle: Row(
+          children: [
+            Row(
+              children:
+                  WidgetList.foreachMatrixToWidget(item.categories, (element) {
+                return FSuper(
+                  margin: EdgeInsets.only(left: 4.0),
+                  text: element,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                  child1Alignment: Alignment.center,
+                  backgroundColor: Colors.blue[100],
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  corner: FCorner(
+                      rightTopCorner: 20,
+                      rightBottomCorner: 20,
+                      leftBottomCorner: 20,
+                      leftTopCorner: 20),
+                );
+              }, () {
+                return Text(
+                  IntlUtil.getString(context, Ids.homePageListCategoriesEmpty),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.grey[300],
+                  ),
+                );
+              }),
+            ),
+            Spacer(),
+            Row(
+              children: WidgetList.foreachToWidget(item.tags, (element) {
+                return FSuper(
+                  margin: EdgeInsets.only(left: 4.0),
+                  text: element,
+                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  child1Alignment: Alignment.center,
+                  backgroundColor: Colors.red[100],
+                  padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                  corner: FCorner(
+                      rightTopCorner: 20,
+                      rightBottomCorner: 20,
+                      leftBottomCorner: 20,
+                      leftTopCorner: 20),
+                );
+              }, () {
+                return Text(
+                  IntlUtil.getString(context, Ids.homePageListTagsEmpty),
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.grey[300],
+                  ),
+                );
+              }),
+            ),
+          ],
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
         onTap: () {
           Navigator.pushNamed(context, Routing.postDetailPage + item.sId);
         },
@@ -184,76 +255,10 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
     });
   }
 
-  void exit() async {
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString(AppConstant.appAdminUserToken, '');
-    Navigator.popAndPushNamed(context, Routing.loadingPage);
-  }
-
-  void publish() async {
-    BlogApi.deploy().then(
-      (responseValue) {
-        if (responseValue['success']) {
-          AppNotification().showNotification(
-              IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
-          // Toast.show(
-          //     IntlUtil.getString(context, Ids.homePageToastDeploySuccess),
-          //     context,
-          //     duration: Toast.LENGTH_LONG);
-        }
-      },
-    );
-  }
-
-  void cleanHexo() async {
-    BlogApi.clean().then(
-      (responseValue) {
-        if (responseValue['success']) {
-          Toast.show(IntlUtil.getString(context, Ids.homePageToastCleanSuccess),
-              context,
-              duration: Toast.LENGTH_LONG);
-        }
-      },
-    );
-  }
-
-  void changedTheme(AppThemeMode appThemeMode) {
-    Navigator.pop(context);
-    switch (appThemeMode) {
-      case AppThemeMode.followSystem:
-        Provider.of<ThemeNotifier>(context, listen: false).setFollowSystem();
-        break;
-      case AppThemeMode.dark:
-        Provider.of<ThemeNotifier>(context, listen: false).setDark();
-        break;
-      case AppThemeMode.light:
-        Provider.of<ThemeNotifier>(context, listen: false).setLight();
-        break;
-    }
-    setState(() {
-      _selectedThemeValue = appThemeMode;
-    });
-  }
-
-  void github() async {
-    String github = 'https://github.com/maomishen/winwin-hexo-editor-mobile';
-    if (await canLaunch(github)) {
-      await launch(github);
-    }
-  }
-
-  void aboutApp() {
-    showAboutDialog(context: context);
-    // showLicensePage(
-    //           context: context,
-    //         );
-    // Navigator.pushNamed(context, Routing.aboutAppPage);
-  }
-
   void createNewPost() {
-    // Navigator.pushNamed(context, Routing.newPostPage);
-    AppNotification().showNotification(
-        IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
+    Navigator.pushNamed(context, Routing.newPostPage);
+    // AppNotification().showNotification(
+    //     IntlUtil.getString(context, Ids.homePageToastDeploySuccess));
   }
 
   @override
@@ -269,142 +274,28 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
           createNewPost();
         },
       ),
-      drawer: Drawer(
-        child: Container(
-          child: Column(
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                  _name,
-                ),
-                accountEmail: Text(
-                  '$_version',
-                ),
-              ),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(
-                        Icons.publish,
-                        color: Colors.blue,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawPublish),
-                      ),
-                      subtitle: Text(
-                        IntlUtil.getString(context, Ids.drawPublishDetail),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        publish();
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.clear,
-                        color: Colors.orange,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawClean),
-                      ),
-                      subtitle: Text(
-                        IntlUtil.getString(context, Ids.drawCleanDetail),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        cleanHexo();
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.info_outline,
-                        color: Colors.blue,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawAppInfo),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        aboutApp();
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.theaters,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawThemeMode),
-                      ),
-                      trailing: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          value: _selectedThemeValue,
-                          items: AppTheme.appThemeModeList(),
-                          onChanged: (value) => changedTheme(value),
-                        ),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        LineAwesomeIcons.github,
-                        color: Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawGithub),
-                      ),
-                      onTap: () {
-                        Navigator.pop(context);
-                        github();
-                      },
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.exit_to_app,
-                        color: Colors.red,
-                      ),
-                      title: Text(
-                        IntlUtil.getString(context, Ids.drawExit),
-                      ),
-                      onTap: () {
-                        exit();
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      drawer: HomeDrawer(),
+      body: SafeArea(
+        child: EasyRefresh(
+          firstRefresh: true,
+          controller: _refreshController,
+          header: MaterialHeader(),
+          footer: MaterialFooter(),
+          onRefresh: _initRequester,
+          child: ListView.builder(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            itemCount: _postLists.length,
+            itemBuilder: (context, index) {
+              return _itemBuilder(_postLists, context, index);
+            },
           ),
-        ),
-      ),
-      body: WaveBackground(
-        child: SafeArea(
-          child: EasyRefresh(
-            firstRefresh: true,
-            controller: _refreshController,
-            header: MaterialHeader(),
-            footer: MaterialFooter(),
-            onRefresh: _initRequester,
-            child: ListView.builder(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-              itemCount: _postLists.length,
-              itemBuilder: (context, index) {
-                return _itemBuilder(_postLists, context, index);
-              },
-            ),
-            emptyWidget: _postLists.length == 0
-                ? Center(
-                    child: Text(
-                      IntlUtil.getString(context, Ids.homePageListEmptyText),
-                    ),
-                  )
-                : null,
-          ),
+          emptyWidget: _postLists.length == 0
+              ? Center(
+                  child: Text(
+                    IntlUtil.getString(context, Ids.homePageListEmptyText),
+                  ),
+                )
+              : null,
         ),
       ),
     );

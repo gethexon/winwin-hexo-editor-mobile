@@ -42,6 +42,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(AppConstant.navigatorKey.currentContext,
               Ids.drawThemeListFollowSystem),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );
@@ -51,6 +52,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(
               AppConstant.navigatorKey.currentContext, Ids.drawThemeListDark),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );
@@ -60,6 +62,7 @@ class AppTheme {
         child: Text(
           IntlUtil.getString(
               AppConstant.navigatorKey.currentContext, Ids.drawThemeListLight),
+          style: TextStyle(fontSize: 12.0),
         ),
       ),
     );
@@ -70,6 +73,7 @@ class AppTheme {
     return ThemeData(
       errorColor: isDarkMode ? Colors.red : Colors.red,
       brightness: isDarkMode ? Brightness.dark : Brightness.light,
+      buttonColor: isDarkMode ? Colors.white : Colors.blue,
       // primaryColor: isDarkMode ? Colors.dark_app_main : Colors.blue,
       // accentColor: isDarkMode ? Colors.dark_app_main : Colors.app_main,
       // Tab指示器颜色

@@ -2,7 +2,7 @@ class PostItem {
   String sId;
   String slug;
   String raw;
-  String categories;
+  List<List<dynamic>> categories;
   int date;
   List<String> tags;
   String layout;
@@ -26,7 +26,7 @@ class PostItem {
     sId = json['_id'];
     slug = json['slug'];
     raw = json['raw'];
-    categories = json['categories'];
+    categories = json['categories']?.cast<List<dynamic>>();
     date = json['date'];
     tags = json['tags']?.cast<String>();
     layout = json['layout'];

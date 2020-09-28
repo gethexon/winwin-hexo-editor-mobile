@@ -16,7 +16,8 @@ class TokenInterceptor extends Interceptor {
       dio.lock();
       var prefs = await SharedPreferences.getInstance();
       var jsonValue = await refreshToken(dio, prefs);
-      prefs.setString(AppConstant.appAdminRefreshToken, jsonValue['refreshToken']);
+      prefs.setString(
+          AppConstant.appAdminRefreshToken, jsonValue['refreshToken']);
       prefs.setString(AppConstant.appAdminUserToken, jsonValue['token']);
       var token = jsonValue['token'];
       Dio tokenDio = Dio();
@@ -38,20 +39,21 @@ class TokenInterceptor extends Interceptor {
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
     var refreshToken = prefs.getString(AppConstant.appAdminRefreshToken);
     var returnValue;
-    
+
     try {
       var options = Options(
         headers: {authTag: "Bearer $refreshToken"},
       );
       Response response = await Dio()
-          .get(server + AppApiAddress.refreshToken, options: options);
+          .post(server + AppApiAddress.refreshToken, options: options);
       returnValue = response.data['data'];
     } on DioError catch (onError) {
-      if (onError.response.statusCode == 401) {
+      if (onError.response.statusCode != 200) {
         prefs.setString(AppConstant.appAdminRefreshToken, '');
         prefs.setString(AppConstant.appAdminUserToken, '');
         dio.unlock();
-        return Navigator.popAndPushNamed(AppConstant.navigatorKey.currentContext, Routing.loadingPage);
+        return Navigator.popAndPushNamed(
+            AppConstant.navigatorKey.currentContext, Routing.loadingPage);
       }
     }
     return returnValue;

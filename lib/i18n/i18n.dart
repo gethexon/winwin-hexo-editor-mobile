@@ -3,12 +3,15 @@ class Ids {
   static final String loginPageServerHint = 'loginPage_serverHint';
   static final String loginPageUserHint = 'loginPage_userHint';
   static final String loginPagePasswordHint = 'loginPage_passwordHint';
+  static final String loginPageScanQrCodeButton = 'loginPageScanQrCodeButton';
   static final String loginPageLoginButton = 'loginPageLoginButton';
   static final String loginPageGithubButton = 'loginPageGithubButton';
-  static final String loginPageWelcomBack = 'loginPageWelcomBack';
+  static final String loginPageSwipeLeft = 'loginPageSwipeLeft';
+  static final String loginPageSwipeRight = 'loginPageSwipeRight';
   static final String loginPageServerEmptyError = 'loginPageServerEmptyError';
   static final String loginPageUserEmptyError = 'loginPageUserEmptyError';
-  static final String loginPagePasswordEmptyError = 'loginPagePasswordEmptyError';
+  static final String loginPagePasswordEmptyError =
+      'loginPagePasswordEmptyError';
   static final String loadingAlertText = 'loadingAlertText';
   static final String homePageListEmptyText = 'homePageListEmptyText';
   static final String homePageAlertDeleteText = 'homePageAlertDeleteText';
@@ -18,11 +21,19 @@ class Ids {
   static final String homePagePublish = 'homePagePublish';
   static final String homePageToastCleanSuccess = 'homePageToastCleanSuccess';
   static final String homePageToastDeploySuccess = 'homePageToastDeploySuccess';
+  static final String homePageListCategoriesEmpty =
+      'homePageListCategoriesEmpty';
+  static final String homePageListTagsEmpty = 'homePageListTagsEmpty';
+  static final String homeDateTemplateString = 'homeDateTemplateString';
   static final String commonNetworkError = 'commonNextWorkError';
-  static final String notificationPermissionsRequest = 'notificationPermissionsRequest';
+  static final String notificationPermissionsRequest =
+      'notificationPermissionsRequest';
   static final String delete = 'delete';
+  static final String categories = 'categories';
+  static final String tags = 'tags';
   static final String yes = 'Yes';
   static final String no = 'No';
+  static final String cancel = 'cancel';
   static final String never = 'never';
   static final String loading = 'loading';
   static final String drawExit = 'drawExit';
@@ -36,11 +47,26 @@ class Ids {
   static final String drawPublish = 'drawPublish';
   static final String drawPublishDetail = 'drawPublishDetail';
   static final String drawAppInfo = 'drawAppInfo';
+  static final String drawVersionMobile = 'drawVersionMobile';
+  static final String drawVersionServer = 'drawVersionServer';
+  static final String newPostPageAdd = 'newPostPageAdd';
+  static final String newPostPageEditorHolder = 'newPostPageEditorHolder';
   static final String newPostPageAlertPostTitle = 'Post Title';
   static final String newPostPageDefaultTitle = 'newPostPageDefaultTitle';
   static final String newPostPageSaveDialogTitle = 'newPostPageSaveDialogTitle';
-  static final String newPostPageSaveDialogContext = 'newPostPageSaveDialogContext';
-  static final String detailPostPageErrorLunchWeb = 'detailPostPageErrorLunchWeb';
+  static final String newPostPageSaveDialogContext =
+      'newPostPageSaveDialogContext';
+  static final String selectTagsPageEmptyErrorMessage =
+      'selectTagsPageEmptyErrorMessage';
+  static final String selectTagsPageInputHolder = 'selectTagsPageInputHolder';
+  static final String selectCategoriesPageEmptyErrorMessage =
+      'selectCategoriesPageEmptyErrorMessage';
+  static final String selectCategoriesPageInputHolder =
+      'selectCategoriesPageInputHolder';
+  static final String detailPostPageErrorLunchWeb =
+      'detailPostPageErrorLunchWeb';
+  static final String detailTags = 'detailTags';
+  static final String detailCategories = 'detailCategories';
   static final String aboutPageTitle = 'aboutPageTitle';
 }
 
@@ -51,9 +77,11 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageServerHint: 'Your winwin address (eg. http://xxx:5777)',
       Ids.loginPageUserHint: 'Your winwin user name (default: admin)',
       Ids.loginPagePasswordHint: 'Your winwin password (default: admin)',
+      Ids.loginPageScanQrCodeButton: 'Scan QR code',
       Ids.loginPageLoginButton: 'Login',
       Ids.loginPageGithubButton: 'About winwin Hexo editor',
-      Ids.loginPageWelcomBack: 'Welcome\nBack',
+      Ids.loginPageSwipeLeft: 'Swipe Left to change another way',
+      Ids.loginPageSwipeRight: 'Swipe Right to change another way',
       Ids.loginPagePasswordEmptyError: 'You need to input a password',
       Ids.loginPageUserEmptyError: 'You need to input a name',
       Ids.loginPageServerEmptyError: 'You need to input a server address',
@@ -66,12 +94,19 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: 'Publish',
       Ids.homePageToastCleanSuccess: 'Clean Success',
       Ids.homePageToastDeploySuccess: 'Deploy Success',
+      Ids.homePageListCategoriesEmpty: 'No Categories',
+      Ids.homePageListTagsEmpty: 'No Tags',
+      Ids.homeDateTemplateString: null, //set to null will be using the default
       Ids.commonNetworkError: 'Network Error',
-      Ids.notificationPermissionsRequest: 'We want to let you know when deploy success, so we need to get notification permission.',
+      Ids.notificationPermissionsRequest:
+          'We want to let you know when deploy success, so we need to get notification permission.',
       Ids.yes: 'Yes',
       Ids.no: 'No',
+      Ids.cancel: 'Cancel',
       Ids.never: 'Never',
       Ids.delete: 'Delete',
+      Ids.tags: 'Tags',
+      Ids.categories: 'Categories',
       Ids.loading: 'Loading',
       Ids.drawExit: 'Logout',
       Ids.drawClean: 'Clean',
@@ -84,11 +119,21 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeListFollowSystem: 'Follow System',
       Ids.drawThemeListDark: 'Dark',
       Ids.drawThemeListLight: 'Light',
+      Ids.drawVersionServer: 'Server:',
+      Ids.drawVersionMobile: 'Mobile:',
+      Ids.newPostPageAdd: 'Add',
+      Ids.newPostPageEditorHolder: 'Start your show',
       Ids.newPostPageAlertPostTitle: 'Post Title',
       Ids.newPostPageDefaultTitle: 'Tap to change title',
       Ids.newPostPageSaveDialogTitle: 'Save',
       Ids.newPostPageSaveDialogContext: 'Save on your winwin editor website?',
+      Ids.selectTagsPageEmptyErrorMessage: 'Please input a tag name',
+      Ids.selectTagsPageInputHolder: 'Input a tag name',
+      Ids.selectCategoriesPageEmptyErrorMessage: 'Please input a category name',
+      Ids.selectCategoriesPageInputHolder: 'Input a category name',
       Ids.detailPostPageErrorLunchWeb: 'Failed to open this link',
+      Ids.detailTags: 'Tags: ',
+      Ids.detailCategories: 'Categories: ',
       Ids.aboutPageTitle: 'About',
     }
   },
@@ -98,13 +143,17 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.loginPageServerHint: '您的winwin地址 (例如：http://xxx:5777)',
       Ids.loginPageUserHint: '您的winwin登录名（默认admin)',
       Ids.loginPagePasswordHint: '您的winwin密码（默认admin)',
+      Ids.loginPageScanQrCodeButton: '扫描二维码',
       Ids.loginPageLoginButton: '登录',
-      Ids.loginPageWelcomBack: '欢迎\n  回来',
+      Ids.loginPageSwipeLeft: '向左滑动换一种方式登录',
+      Ids.loginPageSwipeRight: '向右滑动换一种方式登录',
       Ids.loginPagePasswordEmptyError: '请输入密码',
       Ids.loginPageUserEmptyError: '请输入登录名',
       Ids.loginPageServerEmptyError: '请输入服务器地址',
       Ids.loginPageGithubButton: '关于 winwin Hexo editor',
       Ids.loadingAlertText: '请求中...',
+      Ids.newPostPageAdd: '增加',
+      Ids.newPostPageEditorHolder: '请开始您的表演~',
       Ids.homePageListEmptyText: '空的呢~',
       Ids.homePageAlertDeleteText: '确定删除吗?',
       Ids.homePageAlertPublishText: '发布吗?',
@@ -113,12 +162,18 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.homePagePublish: '发布',
       Ids.homePageToastCleanSuccess: '清理成功',
       Ids.homePageToastDeploySuccess: '发布成功',
+      Ids.homePageListCategoriesEmpty: '无分类',
+      Ids.homePageListTagsEmpty: '无标签',
+      Ids.homeDateTemplateString: 'yyyy年MM月dd hh:mm:ss',
       Ids.commonNetworkError: '网络请求错误',
       Ids.notificationPermissionsRequest: '我们希望在发布成功时通知你，所以我们需要推送权限。',
       Ids.yes: '是的',
       Ids.no: '不',
+      Ids.cancel: '取消',
       Ids.never: '永不',
       Ids.delete: '删除',
+      Ids.tags: '标签',
+      Ids.categories: '分类',
       Ids.loading: '载入中',
       Ids.drawExit: '退出登录',
       Ids.drawClean: '清除Hexo数据',
@@ -130,12 +185,20 @@ Map<String, Map<String, Map<String, String>>> localizedValues = {
       Ids.drawThemeMode: '主题',
       Ids.drawThemeListFollowSystem: '跟随系统',
       Ids.drawThemeListDark: '暗黑模式',
-      Ids.drawThemeListLight: '正常模式',
+      Ids.drawThemeListLight: '日间模式',
+      Ids.drawVersionServer: '服务器:',
+      Ids.drawVersionMobile: '客户端:',
       Ids.newPostPageAlertPostTitle: '标题',
       Ids.newPostPageDefaultTitle: '点击修改标题',
       Ids.newPostPageSaveDialogTitle: '保存',
       Ids.newPostPageSaveDialogContext: '保存到winwin编辑器吗？',
+      Ids.selectTagsPageEmptyErrorMessage: '标签不可为空',
+      Ids.selectTagsPageInputHolder: '请输入标签',
+      Ids.selectCategoriesPageEmptyErrorMessage: '分类不可为空',
+      Ids.selectCategoriesPageInputHolder: '请输入分类',
       Ids.detailPostPageErrorLunchWeb: '无法打开此链接',
+      Ids.detailTags: '标签: ',
+      Ids.detailCategories: '分类: ',
       Ids.aboutPageTitle: '关于我们',
     },
   }

@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry/sentry.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
+import 'package:winwin_hexo_editor_mobile/i18n/other_base_local.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme.dart';
 import 'package:winwin_hexo_editor_mobile/theme/theme_change_notifier.dart';
 
@@ -78,7 +79,8 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
-              CustomLocalizations.delegate
+              CustomLocalizations.delegate,
+              OtherBaseLocalizationDelegate.delegate,
             ],
             supportedLocales: CustomLocalizations.supportedLocales,
           );

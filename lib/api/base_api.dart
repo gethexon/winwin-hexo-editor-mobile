@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/adapter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:winwin_hexo_editor_mobile/api/token_interceptor.dart';
+import 'package:winwin_hexo_editor_mobile/common/app_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/app_constant.dart';
 
 enum AuthRequestType {
@@ -41,19 +42,42 @@ class BaseApi {
   final String authTag = "Authorization";
 
   Future<dynamic> getRequestWithAuth(
-      String url, Map<String, dynamic> parameters) async {
+      String url, Map<String, dynamic> parameters,
+      {String qrToken}) async {
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
-    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var token;
+    if (qrToken == null || qrToken == '') {
+      token = prefs.getString(AppConstant.appAdminUserToken);
+    } else {
+      token = qrToken;
+    }
     var returnValue;
     try {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .get(server + url, queryParameters: parameters, options: options);
+      Response response = await dio.get(server + url,
+          queryParameters: parameters, options: options);
+      returnValue = response.data;
+    } on DioError catch (onError) {
+      returnValue = onError.response.data;
+    }
+    return returnValue;
+  }
+
+  Future<dynamic> getRequestWithoutAuth(
+      String url, Map<String, dynamic> parameters) async {
+    if (prefs == null) {
+      prefs = await SharedPreferences.getInstance();
+    }
+    var server = prefs.getString(AppConstant.appAdminServerAddrss);
+    var returnValue;
+    try {
+      Response response =
+          await dio.get(server + url, queryParameters: parameters);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
@@ -62,19 +86,25 @@ class BaseApi {
   }
 
   Future<dynamic> postRequestWithAuth(
-      String url, Map<String, dynamic> parameters) async {
+      String url, Map<String, dynamic> parameters,
+      {String qrToken}) async {
     if (prefs == null) {
       prefs = await SharedPreferences.getInstance();
     }
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
-    var token = prefs.getString(AppConstant.appAdminUserToken);
+    var token;
+    if (qrToken == null || qrToken == '') {
+      token = prefs.getString(AppConstant.appAdminUserToken);
+    } else {
+      token = qrToken;
+    }
     var returnValue;
     try {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .post(server + url, data: parameters, options: options);
+      Response response =
+          await dio.post(server + url, data: parameters, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
@@ -94,8 +124,8 @@ class BaseApi {
       var options = Options(
         headers: {authTag: "Bearer $token"},
       );
-      Response response = await dio
-          .delete(server + url, data: parameters, options: options);
+      Response response =
+          await dio.delete(server + url, data: parameters, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
@@ -117,7 +147,8 @@ class BaseApi {
     var server = prefs.getString(AppConstant.appAdminServerAddrss);
     var returnValue;
     try {
-      Response response = await dio.get('$server/token', options: options);
+      Response response =
+          await dio.post(server + AppApiAddress.login, options: options);
       returnValue = response.data;
     } on DioError catch (onError) {
       returnValue = onError.response.data;
