@@ -137,19 +137,21 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              DateUtils.instance.getFormartData(
-                item.date * 1000,
-                IntlUtil.getString(context, Ids.homeDateTemplateString),
-              ),
-              maxLines: 1,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 9.0,
-                color: Colors.grey,
-              ),
-            ),
+            item.date != null
+                ? Text(
+                    DateUtils.instance.getFormartData(
+                      item.date * 1000,
+                      IntlUtil.getString(context, Ids.homeDateTemplateString),
+                    ),
+                    maxLines: 1,
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 9.0,
+                      color: Colors.grey,
+                    ),
+                  )
+                : SizedBox(),
             Text(
               item.title,
               maxLines: 1,

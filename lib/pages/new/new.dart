@@ -5,6 +5,7 @@ import 'package:winwin_hexo_editor_mobile/api/post_api.dart';
 import 'package:winwin_hexo_editor_mobile/common/routing.dart';
 import 'package:winwin_hexo_editor_mobile/entity/category.dart';
 import 'package:winwin_hexo_editor_mobile/entity/tag.dart';
+import 'package:winwin_hexo_editor_mobile/helper/ListToJson.dart';
 import 'package:winwin_hexo_editor_mobile/i18n/i18n.dart';
 import 'package:winwin_hexo_editor_mobile/pages/new/category_arguments.dart';
 import 'package:winwin_hexo_editor_mobile/pages/new/tag_arguments.dart';
@@ -82,6 +83,8 @@ class _NewPostPageState extends State<NewPostPage>
                   "layout": "draft",
                   "_content":
                       notusMarkdown.encode(_controller.document.toDelta()),
+                  "tags": ListToJson.foreachToListItem(_tags),
+                  "categories": ListToJson.foreachToListListItem(_categories),
                 }).then((responseValue) {
                   Navigator.pop(context, responseValue);
                 });
