@@ -1,7 +1,7 @@
 name: winwin_hexo_editor_mobile
 description: A new Flutter project.
 
-version: 1.2.0
+version: 1.2.0+3
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
