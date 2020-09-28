@@ -45,7 +45,7 @@ dev_dependencies:
   flutter_rename_app: ^1.0.0
 
 flutter_rename_app:
-  application_name: HW-Editor
+  application_name: HW Editor
   dart_package_name: winwin_hexo_editor_mobile
   application_id: com.maomishen.wheditor
   bundle_id: com.maomishen.wheditor
