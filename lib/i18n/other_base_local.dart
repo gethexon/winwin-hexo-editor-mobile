@@ -208,13 +208,13 @@ class EnLanguage implements BaseLanguage {
   @override
   String name = "This is English";
   @override
-  String selectAllButtonLabel = "全选";
+  String selectAllButtonLabel = "All";
   @override
-  String pasteButtonLabel = "粘贴";
+  String pasteButtonLabel = "Paste";
   @override
-  String copyButtonLabel = "复制";
+  String copyButtonLabel = "Copy";
   @override
-  String cutButtonLabel = "剪切";
+  String cutButtonLabel = "Cut";
 }
 
 class ChLanguage implements BaseLanguage {
